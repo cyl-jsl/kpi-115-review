@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obsidian PKM 模板系統 — KPI 115</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Sub-page layout */
+    .subpage {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 6rem;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-body);
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      margin-bottom: 2.5rem;
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: var(--gold);
+    }
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+    }
+
+    /* Page header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .page-header h1 {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      color: var(--text-primary);
+      margin: 0 0 0.6rem;
+      letter-spacing: -0.01em;
+    }
+    .page-header .subtitle {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Template grid */
+    .template-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Template card */
+    .template-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .template-card:hover {
+      border-color: rgba(212, 168, 67, 0.3);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+    }
+    .template-card.deprecated {
+      opacity: 0.55;
+    }
+    .template-card.deprecated:hover {
+      opacity: 0.75;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem 1.5rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-surface-2);
+    }
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .deprecated .card-title {
+      text-decoration: line-through;
+      color: var(--text-muted);
+    }
+
+    /* Type badges */
+    .type-badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-daily {
+      background: rgba(96, 165, 250, 0.12);
+      color: #60a5fa;
+      border: 1px solid rgba(96, 165, 250, 0.2);
+    }
+    .badge-fleeting {
+      background: rgba(251, 191, 36, 0.12);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.2);
+    }
+    .badge-literature {
+      background: rgba(52, 211, 153, 0.12);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+    .badge-permanent {
+      background: rgba(167, 139, 250, 0.12);
+      color: #a78bfa;
+      border: 1px solid rgba(167, 139, 250, 0.2);
+    }
+    .badge-task {
+      background: rgba(34, 211, 238, 0.12);
+      color: #22d3ee;
+      border: 1px solid rgba(34, 211, 238, 0.2);
+    }
+    .badge-meeting {
+      background: rgba(244, 114, 182, 0.12);
+      color: #f472b6;
+      border: 1px solid rgba(244, 114, 182, 0.2);
+    }
+    .badge-weekly {
+      background: rgba(45, 212, 191, 0.12);
+      color: #2dd4bf;
+      border: 1px solid rgba(45, 212, 191, 0.2);
+    }
+    .badge-deprecated {
+      background: rgba(107, 107, 128, 0.12);
+      color: #6b6b80;
+      border: 1px solid rgba(107, 107, 128, 0.2);
+    }
+
+    /* Deprecated indicator */
+    .deprecated-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    /* Template content */
+    .card-body {
+      padding: 0;
+    }
+    .template-content {
+      background: #0d0d12;
+      margin: 0;
+      padding: 1.25rem 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.65;
+      color: #c8c8d8;
+      overflow-x: auto;
+      white-space: pre;
+      tab-size: 2;
+      border: none;
+      border-radius: 0;
+    }
+    .template-content code {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+      background: none;
+      padding: 0;
+    }
+
+    /* Number indicator */
+    .card-number {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      min-width: 1.5rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .subpage {
+        padding: 1.25rem 1rem 4rem;
+      }
+      .page-header h1 {
+        font-size: 2rem;
+      }
+      .card-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 1rem 1.25rem;
+      }
+      .template-content {
+        padding: 1rem 1.25rem;
+        font-size: 0.72rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Grain overlay -->
+  <div class="grain"></div>
+
+  <div class="subpage">
+    <!-- Back link -->
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      返回 KPI 自評
+    </a>
+
+    <!-- Page header -->
+    <div class="page-header">
+      <h1>Obsidian PKM 模板系統</h1>
+      <p class="subtitle">8 個標準化模板 — 涵蓋日誌、筆記、任務、會議、回顧等工作場景</p>
+    </div>
+
+    <!-- Template cards -->
+    <div class="template-grid">
+
+      <!-- 1. Daily Note -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">01</span>
+            <h2 class="card-title">Daily Note 模板</h2>
+          </div>
+          <span class="type-badge badge-daily">daily</span>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: daily-note
+domain: general
+status: active
+tags:
+  - 日誌
+---
+
+# {{date:YYYY-MM-DD}} {{date:dddd}}
+
+## 今日焦點
+&gt; 如果今天只能完成一件事，是哪一件？
+1.
+2.
+3.
+
+## 工作記錄
+&gt; 花最多時間在什麼上面？遇到什麼卡點？
+
+## 學習與發現
+&gt; 今天最讓你意外的事是什麼？學到什麼新東西？
+
+## 日終反思
+&gt; 今天完成了什麼？明天最該優先處理的是？
+### 明日優先
+1.</code></pre>
+        </div>
+      </div>
+
+      <!-- 2. Fleeting Note -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">02</span>
+            <h2 class="card-title">Fleeting Note 模板</h2>
+          </div>
+          <span class="type-badge badge-fleeting">fleeting</span>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: fleeting
+domain: general
+status: active
+tags:
+  - 閃念筆記
+source:
+related:
+---
+
+# 閃念筆記
+
+## 想法
+&gt; 快速捕捉靈感、想法、觀察，不需完整組織
+
+## 觸發情境
+&gt; 什麼場景下產生這個想法？
+
+## 後續行動
+- [ ] 發展為 Literature Note
+- [ ] 發展為 Permanent Note
+- [ ] 納入專案筆記
+- [ ] 僅作為記錄，無需後續</code></pre>
+        </div>
+      </div>
+
+      <!-- 3. Literature Note -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">03</span>
+            <h2 class="card-title">Literature Note 模板</h2>
+          </div>
+          <span class="type-badge badge-literature">literature</span>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: literature
+domain: general
+status: active
+tags:
+  - 文獻筆記
+source-type:
+source-title:
+source-author:
+source-url:
+related:
+---
+
+# 文獻筆記：
+
+## 來源資訊
+- **類型**：（文章 / 書籍 / 影片 / 課程 / 官方文件）
+- **標題**：
+- **作者**：
+- **連結**：
+
+## 摘要
+&gt; 用自己的話，3-5 句話總結核心內容
+
+## 重點筆記
+### 1.
+&gt; 原文引述或重點
+**我的理解**：
+
+### 2.
+&gt; 原文引述或重點
+**我的理解**：
+
+## 與現有知識的連結
+&gt; 這些內容與我已知的哪些概念相關？
+
+## 可轉化的 Permanent Note
+- [ ] 尚未整理
+- 待產出的永久筆記主題：</code></pre>
+        </div>
+      </div>
+
+      <!-- 4. Permanent Note -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">04</span>
+            <h2 class="card-title">Permanent Note 模板</h2>
+          </div>
+          <span class="type-badge badge-permanent">permanent</span>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: permanent
+domain: general
+status: active
+tags:
+  - 永久筆記
+related-literature:
+related-permanent:
+---
+
+#
+
+## 核心論述
+&gt; 用自己的話，以完整句子陳述一個獨立的知識點或洞察。
+
+## 論證與補充
+
+## 來源
+- 來自：（連結到 Literature Note）
+
+## 連結
+- 支持：
+- 相關：
+- 對比：
+
+## 應用場景
+&gt; 這個知識可以用在什麼地方？
+- 專案應用：
+- 工作應用：</code></pre>
+        </div>
+      </div>
+
+      <!-- 5. 任務筆記 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">05</span>
+            <h2 class="card-title">任務筆記模板</h2>
+          </div>
+          <span class="type-badge badge-task">task</span>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: task
+domain: general
+status: active
+ticket: ""
+tags: []
+---
+
+# 任務：
+
+## &#x1f4c4; 文件
+&gt; 相關文件、規格書、連結放這裡。
+
+## &#x1f64b;&#x1f3fb; 說明
+&gt; 這個任務要解決什麼問題？完成的標準是什麼？
+
+## &#x1f50d; 研究
+&gt; 我需要先弄清楚什麼才能動手？
+
+## &#x1f522; 流程
+&gt; 步驟是什麼？哪一步最可能出問題？
+
+## &#x1f559; 日誌
+&gt; 按時間記錄進展
+
+| 時間戳記 | 動作 |
+| -------- | ---- |
+|          |      |
+
+## &#x26a0;&#xfe0f; 問題
+&gt; 目前卡在哪裡？我的假設是什麼？
+
+## &#x1f516; 延伸
+&gt; 做這個任務時想到的其他事情</code></pre>
+        </div>
+      </div>
+
+      <!-- 6. 日誌模板（已停用） -->
+      <div class="template-card deprecated">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">06</span>
+            <h2 class="card-title">日誌模板（已停用）</h2>
+          </div>
+          <div style="display:flex;gap:0.5rem;align-items:center;">
+            <span class="deprecated-tag">&#x26d4; DEPRECATED</span>
+            <span class="type-badge badge-deprecated">archived</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: daily-note
+status: archived
+tags:
+  - deprecated
+---
+
+&gt; [!warning] 此模板已停用
+&gt; 請改用 Daily Note 模板
+
+（舊版模板，包含預期任務表格、實際任務表格、工作心得、明天排程）</code></pre>
+        </div>
+      </div>
+
+      <!-- 7. 會議記錄 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">07</span>
+            <h2 class="card-title">會議記錄模板</h2>
+          </div>
+          <span class="type-badge badge-meeting">meeting</span>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: meeting
+domain: general
+status: active
+tags:
+  - 會議
+---
+
+# 會議：
+
+## &#x1f4c5; 基本資訊
+- **日期**：{{date:YYYY-MM-DD}}
+- **主持人**：
+- **參與者**：
+- **錄音**：有 / 無
+
+## &#x1f449; 摘要
+&gt; 這場會議做了什麼決定？用 2-3 句話總結。
+
+## &#x1f4ce; 議題
+### 1.
+### 2.
+
+## &#x1f64b;&#x1f3fb; 決議與行動
+| 行動項目 | 負責人 | 截止日 | 狀態 |
+| -------- | ------ | ------ | ---- |
+|          |        |        |      |
+
+## &#x1f4cc; 與我相關的行動
+- [ ]</code></pre>
+        </div>
+      </div>
+
+      <!-- 8. 週回顧 -->
+      <div class="template-card">
+        <div class="card-header">
+          <div class="card-header-left">
+            <span class="card-number">08</span>
+            <h2 class="card-title">週回顧模板</h2>
+          </div>
+          <span class="type-badge badge-weekly">weekly-review</span>
+        </div>
+        <div class="card-body">
+          <pre class="template-content"><code>---
+created: "{{date:YYYY-MM-DD}}"
+type: weekly-review
+domain: kpi
+status: active
+week: "W"
+quarter: "Q"
+tags:
+  - 週回顧
+  - KPI
+---
+
+# Week __ 週回顧
+
+## KPI 排程對照
+| KPI 項目 | 本週目標 | 完成狀況 | 交付物 |
+| -------- | -------- | -------- | ------ |
+|          |          |          |        |
+
+## 本週完成率
+- **整體完成率**：___%
+- **On Track 項目**：
+- **落後項目**：
+
+## 本週產出
+### 交付物清單
+1.
+### PKM 筆記產出
+- 本週新增筆記數：___
+- 累計筆記數：___
+
+## 反思與學習
+### 做得好的
+### 需要改善的
+### 遭遇的阻礙
+
+## 下週調整
+### 下週重點（Top 3）
+1.
+2.
+3.</code></pre>
+        </div>
+      </div>
+
+    </div><!-- /template-grid -->
+  </div><!-- /subpage -->
+</body>
+</html>

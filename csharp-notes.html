@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C# 進階學習筆記 — 張永霖</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Sub-page layout */
+    .sub-page {
+      max-width: var(--content-max);
+      margin: 0 auto;
+      padding: 40px 24px 120px;
+    }
+
+    /* Back link */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-bottom: 32px;
+      transition: color 0.2s;
+    }
+    .back-link:hover {
+      color: var(--gold);
+    }
+    .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Article header */
+    .article-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .article-header h1 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 40px);
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 24px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .article-meta strong {
+      color: var(--text-secondary);
+    }
+    .article-meta .meta-value {
+      color: var(--text-secondary);
+    }
+    .article-meta code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--gold);
+      background: var(--gold-glow);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    /* Article body */
+    .article-body h2 {
+      font-family: var(--font-heading);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--gold);
+      margin: 56px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .article-body h3 {
+      font-family: var(--font-heading);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 36px 0 14px;
+    }
+    .article-body h4 {
+      font-family: var(--font-heading);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin: 24px 0 10px;
+    }
+    .article-body p {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+    .article-body ul,
+    .article-body ol {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+      padding-left: 24px;
+      margin-bottom: 16px;
+    }
+    .article-body li {
+      margin-bottom: 6px;
+    }
+    .article-body li strong {
+      color: var(--text-primary);
+    }
+    .article-body blockquote {
+      border-left: 3px solid var(--gold);
+      background: var(--bg-surface);
+      padding: 16px 20px;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 20px;
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+    .article-body blockquote strong {
+      color: var(--text-primary);
+    }
+
+    /* Inline code */
+    .article-body p code,
+    .article-body li code,
+    .article-body td code {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--gold);
+      background: rgba(212, 168, 67, 0.1);
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(212, 168, 67, 0.15);
+    }
+
+    /* Code blocks */
+    .code-block {
+      position: relative;
+      margin: 16px 0 24px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .code-block-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 16px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .code-block pre {
+      margin: 0;
+      padding: 20px;
+      background: #0d0d12;
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      tab-size: 4;
+    }
+    .code-block code {
+      font-family: var(--font-mono);
+    }
+
+    /* Syntax highlight colors */
+    .kw { color: #d4a843; }         /* keywords — gold */
+    .tp { color: #60a5fa; }         /* types — blue */
+    .str { color: #34d399; }        /* strings — green */
+    .cm { color: #6b6b80; }         /* comments — gray */
+    .fn { color: #c4b5fd; }         /* function names — purple */
+    .num { color: #fbbf24; }        /* numbers — yellow */
+    .op { color: #9d9db0; }         /* operators — secondary text */
+
+    /* Tables */
+    .article-table-wrap {
+      overflow-x: auto;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin: 16px 0 24px;
+    }
+    .article-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .article-table th,
+    .article-table td {
+      padding: 10px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .article-table th {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      background: var(--bg-surface);
+    }
+    .article-table td {
+      color: var(--text-secondary);
+      font-family: var(--font-body);
+      font-size: 14px;
+    }
+    .article-table td:first-child,
+    .article-table th:first-child {
+      text-align: left;
+    }
+    .article-table tr:last-child td {
+      border-bottom: none;
+    }
+    .article-table .danger {
+      color: var(--danger);
+    }
+    .article-table .success {
+      color: var(--success);
+    }
+
+    /* Task state diagram */
+    .state-flow {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 24px;
+      margin: 12px 0 24px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .state-flow .state {
+      color: var(--gold);
+      font-weight: 500;
+    }
+    .state-flow .arrow {
+      color: var(--text-muted);
+      margin: 0 4px;
+    }
+
+    /* Tips: do / don't */
+    .tip-do { color: var(--success); }
+    .tip-dont { color: var(--danger); }
+
+    /* Section list */
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 24px;
+    }
+    .tag-list li {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--text-secondary);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-bottom: 0;
+    }
+
+    /* Takeaway cards */
+    .takeaway-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin: 20px 0 32px;
+    }
+    .takeaway-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .takeaway-card .num {
+      font-family: var(--font-display);
+      font-size: 28px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .takeaway-card h4 {
+      font-family: var(--font-heading);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin: 0 0 8px !important;
+    }
+    .takeaway-card p {
+      font-size: 13px !important;
+      color: var(--text-muted) !important;
+      margin: 0 !important;
+      line-height: 1.6 !important;
+    }
+
+    /* Back to top */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, color 0.2s, border-color 0.2s;
+      z-index: 100;
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .back-to-top:hover {
+      color: var(--gold);
+      border-color: var(--gold-dim);
+    }
+
+    /* Follow-up section */
+    .followup {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .followup h4 {
+      margin: 0 0 12px !important;
+      color: var(--text-primary) !important;
+    }
+    .followup ul {
+      margin: 0 !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Grain overlay -->
+  <div class="grain"></div>
+
+  <main class="sub-page">
+    <!-- Back link -->
+    <a href="index.html" class="back-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+      返回 KPI 自評
+    </a>
+
+    <!-- Article Header -->
+    <header class="article-header">
+      <h1>C# 進階學習成果：非同步與 LINQ</h1>
+      <div class="article-meta">
+        <span><strong>負責人</strong>　張永霖（Chief Jin）</span>
+        <span><strong>學習期間</strong>　2026/3 ~ 2026/3</span>
+        <span><strong>實作應用</strong>　skills4ifa 後端 Controller Skill 開發（<code>developing-ifa-controllers</code>）</span>
+      </div>
+    </header>
+
+    <!-- Article Body -->
+    <article class="article-body">
+
+      <!-- ===== 一、非同步程式設計 ===== -->
+      <h2>一、非同步程式設計（async/await）</h2>
+
+      <h3>1.1 基礎概念</h3>
+
+      <h4>什麼是非同步？</h4>
+      <p>同步程式碼像排隊買飲料 — 每個人必須等前一個人買完才能點餐。非同步則像餐廳點餐 — 你點完餐後可以先做別的事，餐點準備好了再通知你。</p>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="cm">// 同步：執行緒被阻塞，等 DB 回應</span>
+<span class="tp">DataTable</span> result <span class="op">=</span> dbc.<span class="fn">FillDataTable</span>(sql, ht);  <span class="cm">// 等待中...什麼都不能做</span>
+
+<span class="cm">// 非同步：執行緒可以去服務其他 Request</span>
+<span class="tp">DataTable</span> result <span class="op">=</span> <span class="kw">await</span> dbc.<span class="fn">FillDataTableAsync</span>(sql, ht);  <span class="cm">// 先去忙別的</span></code></pre>
+      </div>
+
+      <h4>為什麼 Web API 需要非同步？</h4>
+      <p>ASP.NET Core 的執行緒池是有限的。如果每個 Request 都同步等待 DB 回應，執行緒就被卡住了：</p>
+
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr>
+              <th>情境</th>
+              <th>100 個同時 Request</th>
+              <th>執行緒使用</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>同步</td>
+              <td>100 個執行緒全部等 DB</td>
+              <td class="danger">執行緒池耗盡 → 503</td>
+            </tr>
+            <tr>
+              <td>非同步</td>
+              <td>100 個 Request 發出 DB 請求後釋放執行緒</td>
+              <td class="success">只需少量執行緒輪流處理</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>1.2 Task 與 Task&lt;T&gt;</h3>
+
+      <p>Task 是「一個尚未完成的工作」的物件表示。它不是執行緒，而是一個承諾（Promise）— 承諾未來會完成並給你結果。</p>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="cm">// Task：不回傳值的非同步操作</span>
+<span class="tp">Task</span> <span class="fn">SaveLogAsync</span>()
+{
+    <span class="kw">await</span> db.<span class="fn">ExecuteAsync</span>(<span class="str">"INSERT INTO LOG ..."</span>);
+}
+
+<span class="cm">// Task&lt;T&gt;：回傳值的非同步操作</span>
+<span class="tp">Task</span>&lt;<span class="tp">DataTable</span>&gt; <span class="fn">GetDataAsync</span>()
+{
+    <span class="kw">return</span> <span class="kw">await</span> db.<span class="fn">FillDataTableAsync</span>(sql, ht);
+}</code></pre>
+      </div>
+
+      <p>Task 的三種狀態：</p>
+      <div class="state-flow">
+        <span class="state">Created</span>
+        <span class="arrow">→</span>
+        <span class="state">Running</span>
+        <span class="arrow">→</span>
+        <span class="state">Completed</span>（成功）/
+        <span class="state">Faulted</span>（例外）/
+        <span class="state">Canceled</span>（取消）
+      </div>
+
+      <h3>1.3 async/await 語法</h3>
+
+      <p>基本規則：</p>
+      <ul>
+        <li><code>async</code> 標記方法：告訴編譯器這個方法內有 <code>await</code></li>
+        <li><code>await</code> 等待 Task：暫停方法執行，釋放執行緒，Task 完成後恢復</li>
+        <li>回傳 <code>Task</code> 或 <code>Task&lt;T&gt;</code>：async 方法的回傳型態</li>
+        <li>命名慣例 <code>XxxAsync</code>：非同步方法名稱加 Async 後綴</li>
+      </ul>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="kw">public</span> <span class="kw">async</span> <span class="tp">Task</span>&lt;<span class="tp">IActionResult</span>&gt; <span class="fn">Init</span>()
+{
+    <span class="kw">var</span> data <span class="op">=</span> <span class="kw">await</span> <span class="fn">GetMasterDataAsync</span>();
+    <span class="kw">var</span> task1 <span class="op">=</span> <span class="fn">GetDropdownAsync</span>(<span class="str">"QL_YEAR"</span>);
+    <span class="kw">var</span> task2 <span class="op">=</span> <span class="fn">GetDropdownAsync</span>(<span class="str">"QL_FUND"</span>);
+    <span class="kw">await</span> <span class="tp">Task</span>.<span class="fn">WhenAll</span>(task1, task2);
+    <span class="kw">return</span> <span class="fn">Ok</span>(data);
+}</code></pre>
+      </div>
+
+      <h3>1.4 TAP 模式（Task-based Asynchronous Pattern）</h3>
+
+      <p>TAP 是 .NET 推薦的非同步設計模式。</p>
+
+      <p>常見陷阱：</p>
+      <ul>
+        <li><span class="tip-dont">&#10060; 不要用 <code>.Result</code> 或 <code>.Wait()</code></span> — 會造成死鎖</li>
+        <li><span class="tip-do">&#10004; 用 <code>await</code></span></li>
+        <li><span class="tip-dont">&#10060; 不要 <code>async void</code>（除了事件處理器）</span> — 例外無法被捕獲</li>
+        <li><span class="tip-do">&#10004; 用 <code>async Task</code></span></li>
+      </ul>
+
+      <h3>1.5 在 IFA 後端的實際應用</h3>
+
+      <p>IFA 的 KSI Kernel 框架目前使用同步模式。理解非同步概念對以下場景至關重要：</p>
+      <ul>
+        <li><strong>場景 1</strong>：Controller Action 從同步升級為非同步</li>
+        <li><strong>場景 2</strong>：手動 Transaction 的非同步版本</li>
+      </ul>
+
+      <!-- ===== 二、LINQ ===== -->
+      <h2>二、LINQ（Language Integrated Query）</h2>
+
+      <h3>2.1 什麼是 LINQ？</h3>
+      <p>LINQ 是 C# 內建的查詢語法，讓你用一致的方式查詢各種資料來源。</p>
+
+      <h3>2.2 兩種語法</h3>
+      <ul>
+        <li><strong>方法語法（Method Syntax）</strong> — 推薦</li>
+        <li><strong>查詢語法（Query Syntax）</strong></li>
+      </ul>
+
+      <h3>2.3 常用 LINQ 方法</h3>
+
+      <h4>篩選與投影</h4>
+      <ul class="tag-list">
+        <li>Where</li>
+        <li>Select</li>
+        <li>SelectMany</li>
+        <li>Distinct</li>
+      </ul>
+
+      <h4>排序</h4>
+      <ul class="tag-list">
+        <li>OrderBy</li>
+        <li>OrderByDescending</li>
+        <li>ThenBy</li>
+      </ul>
+
+      <h4>聚合</h4>
+      <ul class="tag-list">
+        <li>Count</li>
+        <li>Sum</li>
+        <li>Average</li>
+        <li>Max / Min</li>
+        <li>Aggregate</li>
+      </ul>
+
+      <h4>分組與連接</h4>
+      <ul class="tag-list">
+        <li>GroupBy</li>
+        <li>Join</li>
+        <li>GroupJoin</li>
+      </ul>
+
+      <h4>判斷</h4>
+      <ul class="tag-list">
+        <li>Any</li>
+        <li>All</li>
+        <li>Contains</li>
+      </ul>
+
+      <h4>取值</h4>
+      <ul class="tag-list">
+        <li>First</li>
+        <li>FirstOrDefault</li>
+        <li>Single</li>
+        <li>SingleOrDefault</li>
+      </ul>
+
+      <h3>2.4 IEnumerable&lt;T&gt; 深入理解</h3>
+      <ul>
+        <li><strong>延遲執行（Deferred Execution）</strong></li>
+        <li><strong>IEnumerable vs IQueryable</strong></li>
+        <li><strong>避免多次 enumerate 同一個 IEnumerable</strong></li>
+      </ul>
+
+      <h3>2.5 在 IFA 後端的實際應用</h3>
+      <ul>
+        <li><strong>場景 1</strong>：DataTable 查詢（<code>AsEnumerable</code> + LINQ）</li>
+        <li><strong>場景 2</strong>：Searched 事件中對查詢結果後加工</li>
+        <li><strong>場景 3</strong>：集合操作（多 DataTable Union）</li>
+        <li><strong>場景 4</strong>：string 集合處理（WHERE 條件組合、必填欄位檢查）</li>
+      </ul>
+
+      <!-- ===== 三、整合應用 ===== -->
+      <h2>三、整合應用：非同步 + LINQ</h2>
+      <p>概念整合和 IFA 未來升級方向。</p>
+
+      <!-- ===== 四、學習心得總結 ===== -->
+      <h2>四、學習心得總結</h2>
+
+      <p>關鍵收穫：</p>
+      <div class="takeaway-grid">
+        <div class="takeaway-card">
+          <div class="num">1</div>
+          <h4>非同步不等於多執行緒</h4>
+          <p>async/await 是關於「不浪費等待時間」</p>
+        </div>
+        <div class="takeaway-card">
+          <div class="num">2</div>
+          <h4>LINQ 是思維方式的轉變</h4>
+          <p>從「怎麼做」變成「要什麼」的宣告式程式設計</p>
+        </div>
+        <div class="takeaway-card">
+          <div class="num">3</div>
+          <h4>延遲執行是雙面刃</h4>
+          <p>理解 IEnumerable 的延遲特性可以避免效能陷阱</p>
+        </div>
+        <div class="takeaway-card">
+          <div class="num">4</div>
+          <h4>實作比理論重要</h4>
+          <p>DataTable + LINQ 的組合是最常見的應用場景</p>
+        </div>
+      </div>
+
+      <div class="followup">
+        <h4>後續學習方向（Q2）</h4>
+        <ul>
+          <li>C# ASP.NET Core API 開發規範</li>
+          <li>SQL Server SP 撰寫準則</li>
+          <li>EF Core（選修）</li>
+        </ul>
+      </div>
+
+    </article>
+  </main>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop" aria-label="回到頂部">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+  </button>
+
+  <script>
+    // Back to top button
+    const btn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      btn.classList.toggle('visible', window.scrollY > 400);
+    });
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>

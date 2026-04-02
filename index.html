@@ -1,732 +1,1043 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-TW">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>115 年度 KPI 自評 — 張永霖</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <!-- Grain overlay -->
-  <div class="grain"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>115 年度 KPI 自評 — 張永霖</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Grain overlay -->
+    <div class="grain"></div>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="header-inner">
-      <div class="header-brand">
-        <h1 class="header-title">KPI</h1>
-        <div class="header-meta">
-          <span class="header-year">115 年度</span>
-          <span class="header-divider">/</span>
-          <span class="header-name">張永霖</span>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="header-brand">
+          <h1 class="header-title">KPI</h1>
+          <div class="header-meta">
+            <span class="header-year">115 年度</span>
+            <span class="header-divider">/</span>
+            <span class="header-name">張永霖</span>
+          </div>
         </div>
+        <nav class="quarter-nav">
+          <button class="quarter-tab active" data-quarter="q1">Q1</button>
+          <button class="quarter-tab" data-quarter="q2" disabled>Q2</button>
+          <button class="quarter-tab" data-quarter="q3" disabled>Q3</button>
+          <button class="quarter-tab" data-quarter="q4" disabled>Q4</button>
+        </nav>
       </div>
-      <nav class="quarter-nav">
-        <button class="quarter-tab active" data-quarter="q1">Q1</button>
-        <button class="quarter-tab" data-quarter="q2" disabled>Q2</button>
-        <button class="quarter-tab" data-quarter="q3" disabled>Q3</button>
-        <button class="quarter-tab" data-quarter="q4" disabled>Q4</button>
-      </nav>
-    </div>
-  </header>
+    </header>
 
-  <!-- Item Navigation -->
-  <nav class="item-nav">
-    <div class="item-nav-inner">
-      <button class="item-tab active" data-tab="overview">總覽</button>
-      <button class="item-tab" data-tab="skills4ifa">skills4ifa</button>
-      <button class="item-tab" data-tab="chart-poc">視覺化 POC</button>
-      <button class="item-tab" data-tab="csharp">C# 進階</button>
-      <button class="item-tab" data-tab="pkm">PKM</button>
-      <button class="item-tab" data-tab="ipas">iPAS</button>
-      <button class="item-tab" data-tab="routine">例行工作</button>
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <main class="content">
-
-    <!-- ==================== 總覽 ==================== -->
-    <section id="overview" class="tab-panel active">
-      <div class="overview-hero">
-        <div class="hero-score-block">
-          <div class="hero-label">Q1 整體達成率</div>
-          <div class="hero-score" data-value="80">
-            <span class="hero-number">80</span><span class="hero-percent">%</span>
-          </div>
-          <div class="hero-period">2026/03/02 — 2026/03/31</div>
-        </div>
-        <div class="hero-summary">
-          <div class="hero-stat">
-            <span class="hero-stat-value">5</span>
-            <span class="hero-stat-label">個人目標</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-value success">4</span>
-            <span class="hero-stat-label">已完成</span>
-          </div>
-          <div class="hero-stat">
-            <span class="hero-stat-value danger">1</span>
-            <span class="hero-stat-label">順延</span>
-          </div>
-        </div>
+    <!-- Item Navigation -->
+    <nav class="item-nav">
+      <div class="item-nav-inner">
+        <button class="item-tab active" data-tab="overview">總覽</button>
+        <button class="item-tab" data-tab="skills4ifa">skills4ifa</button>
+        <button class="item-tab" data-tab="chart-poc">視覺化 POC</button>
+        <button class="item-tab" data-tab="csharp">C# 進階</button>
+        <button class="item-tab" data-tab="pkm">PKM</button>
+        <button class="item-tab" data-tab="ipas">iPAS</button>
+        <button class="item-tab" data-tab="routine">例行工作</button>
       </div>
+    </nav>
 
-      <h2 class="section-title">個人目標</h2>
-      <div class="kpi-grid">
-        <div class="kpi-card" data-navigate="skills4ifa" data-status="exceeded">
-          <div class="kpi-card-header">
-            <span class="kpi-card-score">150%</span>
-            <span class="kpi-badge badge-exceeded">大幅超標</span>
+    <!-- Main Content -->
+    <main class="content">
+      <!-- ==================== 總覽 ==================== -->
+      <section id="overview" class="tab-panel active">
+        <div class="overview-hero">
+          <div class="hero-score-block">
+            <div class="hero-label">Q1 整體達成率</div>
+            <div class="hero-score" data-value="80">
+              <span class="hero-number">80</span
+              ><span class="hero-percent">%</span>
+            </div>
+            <div class="hero-period">2026/01/01 — 2026/03/31</div>
           </div>
-          <h3 class="kpi-card-title">skills4ifa 前端開發指南</h3>
-          <p class="kpi-card-desc">16 個 Skill 模組 / v0.7.0 / 四層驗證框架</p>
+          <div class="hero-summary">
+            <div class="hero-stat">
+              <span class="hero-stat-value">5</span>
+              <span class="hero-stat-label">個人目標</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value success">4</span>
+              <span class="hero-stat-label">已完成</span>
+            </div>
+            <div class="hero-stat">
+              <span class="hero-stat-value danger">1</span>
+              <span class="hero-stat-label">順延</span>
+            </div>
+          </div>
         </div>
 
-        <div class="kpi-card" data-navigate="chart-poc" data-status="exceeded">
-          <div class="kpi-card-header">
-            <span class="kpi-card-score">120%</span>
+        <h2 class="section-title">個人目標</h2>
+        <div class="kpi-grid">
+          <div
+            class="kpi-card"
+            data-navigate="skills4ifa"
+            data-status="exceeded"
+          >
+            <div class="kpi-card-header">
+              <span class="kpi-card-score">150%</span>
+              <span class="kpi-badge badge-exceeded">超標完成</span>
+            </div>
+            <h3 class="kpi-card-title">IFA 前端開發 Agent Skills</h3>
+            <p class="kpi-card-desc">
+              16 個 Skill 模組 / v0.7.0 / 四層驗證框架
+            </p>
+          </div>
+
+          <div
+            class="kpi-card"
+            data-navigate="chart-poc"
+            data-status="exceeded"
+          >
+            <div class="kpi-card-header">
+              <span class="kpi-card-score">120%</span>
+              <span class="kpi-badge badge-exceeded">超標完成</span>
+            </div>
+            <h3 class="kpi-card-title">AI/BI 視覺化元件庫</h3>
+            <p class="kpi-card-desc">三庫比較 / 3,411 LOC / 可重用元件庫</p>
+          </div>
+
+          <div class="kpi-card" data-navigate="csharp" data-status="completed">
+            <div class="kpi-card-header">
+              <span class="kpi-card-score">100%</span>
+              <span class="kpi-badge badge-completed">達標</span>
+            </div>
+            <h3 class="kpi-card-title">C# 進階學習</h3>
+            <p class="kpi-card-desc">async/await + LINQ / IFA 應用對照</p>
+          </div>
+
+          <div class="kpi-card" data-navigate="pkm" data-status="completed">
+            <div class="kpi-card-header">
+              <span class="kpi-card-score">100%</span>
+              <span class="kpi-badge badge-completed">達標</span>
+            </div>
+            <h3 class="kpi-card-title">Obsidian PKM</h3>
+            <p class="kpi-card-desc">9 分類 / 8 模板 / 11 則結構化筆記</p>
+          </div>
+
+          <div class="kpi-card" data-navigate="ipas" data-status="failed">
+            <div class="kpi-card-header">
+              <span class="kpi-card-score">0%</span>
+              <span class="kpi-badge badge-failed">順延至 Q2</span>
+            </div>
+            <h3 class="kpi-card-title">iPAS AI 初級證照</h3>
+            <p class="kpi-card-desc">順延至 Q2，目標 5/16 應考</p>
+          </div>
+        </div>
+
+        <h2 class="section-title">例行工作</h2>
+        <div class="kpi-grid kpi-grid-2">
+          <div class="kpi-card" data-navigate="routine" data-status="partial">
+            <div class="kpi-card-header">
+              <span class="kpi-card-score">80%</span>
+              <span class="kpi-badge badge-partial">持續中</span>
+            </div>
+            <h3 class="kpi-card-title">協助其他部門技術</h3>
+            <p class="kpi-card-desc">採購網系統導入 / 教育訓練</p>
+          </div>
+
+          <div class="kpi-card" data-navigate="routine" data-status="na">
+            <div class="kpi-card-header">
+              <span class="kpi-card-score">N/A</span>
+              <span class="kpi-badge badge-na">無工單</span>
+            </div>
+            <h3 class="kpi-card-title">動態表單規劃</h3>
+            <p class="kpi-card-desc">本季無交辦工單，已由同仁完成</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== skills4ifa ==================== -->
+      <section id="skills4ifa" class="tab-panel">
+        <div class="detail-hero">
+          <div class="detail-hero-left">
+            <div class="detail-score-wrap">
+              <span class="detail-score">150</span
+              ><span class="detail-percent">%</span>
+            </div>
             <span class="kpi-badge badge-exceeded">超標完成</span>
           </div>
-          <h3 class="kpi-card-title">AI/BI 視覺化元件庫</h3>
-          <p class="kpi-card-desc">三庫比較 / 3,411 LOC / 可重用元件庫</p>
-        </div>
-
-        <div class="kpi-card" data-navigate="csharp" data-status="completed">
-          <div class="kpi-card-header">
-            <span class="kpi-card-score">100%</span>
-            <span class="kpi-badge badge-completed">達標</span>
-          </div>
-          <h3 class="kpi-card-title">C# 進階學習</h3>
-          <p class="kpi-card-desc">async/await + LINQ / IFA 應用對照</p>
-        </div>
-
-        <div class="kpi-card" data-navigate="pkm" data-status="completed">
-          <div class="kpi-card-header">
-            <span class="kpi-card-score">100%</span>
-            <span class="kpi-badge badge-completed">達標</span>
-          </div>
-          <h3 class="kpi-card-title">Obsidian PKM</h3>
-          <p class="kpi-card-desc">9 分類 / 8 模板 / 11 則結構化筆記</p>
-        </div>
-
-        <div class="kpi-card" data-navigate="ipas" data-status="failed">
-          <div class="kpi-card-header">
-            <span class="kpi-card-score">0%</span>
-            <span class="kpi-badge badge-failed">順延至 Q2</span>
-          </div>
-          <h3 class="kpi-card-title">iPAS AI 初級證照</h3>
-          <p class="kpi-card-desc">順延至 Q2，目標 5/16 應考</p>
-        </div>
-      </div>
-
-      <h2 class="section-title">例行工作</h2>
-      <div class="kpi-grid kpi-grid-2">
-        <div class="kpi-card" data-navigate="routine" data-status="partial">
-          <div class="kpi-card-header">
-            <span class="kpi-card-score">80%</span>
-            <span class="kpi-badge badge-partial">持續中</span>
-          </div>
-          <h3 class="kpi-card-title">協助其他部門技術</h3>
-          <p class="kpi-card-desc">採購網系統導入 / 教育訓練</p>
-        </div>
-
-        <div class="kpi-card" data-navigate="routine" data-status="na">
-          <div class="kpi-card-header">
-            <span class="kpi-card-score">N/A</span>
-            <span class="kpi-badge badge-na">無工單</span>
-          </div>
-          <h3 class="kpi-card-title">動態表單規劃</h3>
-          <p class="kpi-card-desc">本季無交辦工單，已由同仁完成</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== skills4ifa ==================== -->
-    <section id="skills4ifa" class="tab-panel">
-      <div class="detail-hero">
-        <div class="detail-hero-left">
-          <div class="detail-score-wrap">
-            <span class="detail-score">150</span><span class="detail-percent">%</span>
-          </div>
-          <span class="kpi-badge badge-exceeded">大幅超標</span>
-        </div>
-        <div class="detail-hero-right">
-          <h2 class="detail-title">skills4ifa 前端開發指南</h2>
-          <div class="detail-target">
-            <span class="detail-target-label">KPI 指標</span>
-            <span class="detail-target-text">建立可共享、研究及迭代之 Skills 檔案；加速開發效率 ≥ 20%</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-body">
-        <div class="detail-narrative">
-          <h3>自我評述</h3>
-          <p>本季原定目標為產出一份涵蓋 React 元件開發規範、公司既有前端模組使用慣例、API 呼叫模式及頁面路由與狀態管理準則的 Skills.md 文件。實際執行成果遠超預期，已建構出一套完整的 AI Agent Skills 框架體系（skills4ifa），目前版本 v0.7.0。</p>
-          <p>透過 Skill 模組化設計，開發者可直接以自然語言指令驅動 AI 進行 IFA 開發，從需求理解到程式碼生成再到驗證產出形成閉環，預估可加速開發效率 30% 以上（超越原定 20% 目標）。</p>
-        </div>
-
-        <h3>關鍵數據</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <span class="metric-value">16</span>
-            <span class="metric-label">Skill 模組</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">177</span>
-            <span class="metric-label">Markdown 文件</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">v0.7.0</span>
-            <span class="metric-label">當前版本</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">4 層</span>
-            <span class="metric-label">驗證架構</span>
-          </div>
-        </div>
-
-        <h3>具體成果</h3>
-        <div class="evidence-list">
-          <div class="evidence-item">
-            <div class="evidence-icon">01</div>
-            <div class="evidence-content">
-              <h4>Skill 模組體系</h4>
-              <p>涵蓋前端 Views 開發、元件使用、API 整合、樣式規範、規格書撰寫、計畫擬定、品質檢測、驗證輸出等完整開發生命週期。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">02</div>
-            <div class="evidence-content">
-              <h4>驗證框架</h4>
-              <p>四層驗證架構——L1 斷言驗證（Assertion）、L2 信任分數（Trust Score v5）、L3 技術檢查（Tech Checker）、L4 合併報告（Verification Report），確保 AI 生成程式碼的品質可量化追蹤。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">03</div>
-            <div class="evidence-content">
-              <h4>教育訓練</h4>
-              <p>投影片 26 張、講者稿、Q&A 卡片、設置指南、觀察指南等完整訓練材料，並完成 PDF 及 PPTX 版本。規格書撰寫指南 33KB / 770 行，完整訓練計畫 57KB / 872 行。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">04</div>
-            <div class="evidence-content">
-              <h4>後端延伸</h4>
-              <p>已啟動後端 Controller Skill（developing-ifa-controllers），為 Q2 後端 Skills.md 提前佈局。</p>
+          <div class="detail-hero-right">
+            <h2 class="detail-title">IFA 前端開發 Agent Skills</h2>
+            <div class="detail-target">
+              <span class="detail-target-label">KPI 指標</span>
+              <span class="detail-target-text"
+                >建立可共享、研究及迭代之 Skills 檔案；加速開發效率 ≥ 20%</span
+              >
             </div>
           </div>
         </div>
 
-        <h3>Skills 全景圖</h3>
-        <div class="image-showcase">
-          <img src="assets/skills-map.svg" alt="skills4ifa 全景圖：16 Skills 的分層與流向" loading="lazy">
-          <p class="image-caption">skills4ifa 全景圖 — 16 個 Skill 模組的分層架構與工作流向</p>
-        </div>
-
-        <div class="external-link-block">
-          <a href="https://gitlab.ksi.com.tw/ccy/skills4ifa" class="external-link" target="_blank" rel="noopener">
-            <span class="external-link-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"/></svg>
-            </span>
-            <span>
-              <span class="external-link-title">GitLab Repository</span>
-              <span class="external-link-desc">skills4ifa 完整原始碼 — gitlab.ksi.com.tw/ccy/skills4ifa</span>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 視覺化 POC ==================== -->
-    <section id="chart-poc" class="tab-panel">
-      <div class="detail-hero">
-        <div class="detail-hero-left">
-          <div class="detail-score-wrap">
-            <span class="detail-score">120</span><span class="detail-percent">%</span>
+        <div class="detail-body">
+          <div class="detail-narrative">
+            <h3>自我評述</h3>
+            <p>
+              本季原定目標為產出一份涵蓋 React
+              元件開發規範、公司既有前端模組使用慣例、API
+              呼叫模式及頁面路由與狀態管理準則的 Skills.md
+              文件。實際執行成果遠超預期，已建構出一套完整的 AI Agent Skills
+              框架體系（skills4ifa），目前版本 v0.7.0。
+            </p>
+            <p>
+              透過 Skill 模組化設計，開發者可直接以自然語言指令驅動 AI 進行 IFA
+              開發，從需求理解到程式碼生成再到驗證產出形成閉環，預估可加速開發效率
+              30% 以上（超越原定 20% 目標）。
+            </p>
           </div>
-          <span class="kpi-badge badge-exceeded">超標完成</span>
-        </div>
-        <div class="detail-hero-right">
-          <h2 class="detail-title">AI/BI 視覺化應用研究與元件庫建立</h2>
-          <div class="detail-target">
-            <span class="detail-target-label">KPI 指標</span>
-            <span class="detail-target-text">評估 Chart.js 與 D3.js 視覺化框架，完成視覺化元件 POC 展示</span>
-          </div>
-        </div>
-      </div>
 
-      <div class="detail-body">
-        <div class="detail-narrative">
-          <h3>自我評述</h3>
-          <p>原定目標為評估 Chart.js 與 D3.js 兩大視覺化框架，完成 POC 展示。實際執行擴展為三庫比較（加入 Recharts），並完成兩階段開發：Phase A 框架評估 + Phase B 可重用元件庫。</p>
-          <p>測試資料模擬 IFA IFAC010Q 預算執行報表的實際欄位結構，驗證元件庫可直接接入 IFA 資料格式，為後續 BI 視覺化導入奠定基礎。</p>
-        </div>
-
-        <h3>關鍵數據</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <span class="metric-value">3,411</span>
-            <span class="metric-label">行程式碼</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">3</span>
-            <span class="metric-label">框架評比</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">16</span>
-            <span class="metric-label">圖表元件</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">4</span>
-            <span class="metric-label">可重用元件</span>
-          </div>
-        </div>
-
-        <h3>框架評估結果</h3>
-        <div class="eval-table-wrap">
-          <table class="eval-table">
-            <thead>
-              <tr>
-                <th>評估維度</th>
-                <th>權重</th>
-                <th>Chart.js</th>
-                <th>D3.js</th>
-                <th class="highlight-col">Recharts</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>開發效率</td><td>25%</td><td>4</td><td>2</td><td class="highlight-col">5</td>
-              </tr>
-              <tr>
-                <td>IFA 適配性</td><td>25%</td><td>4</td><td>3</td><td class="highlight-col">4</td>
-              </tr>
-              <tr>
-                <td>可維護性</td><td>20%</td><td>4</td><td>2</td><td class="highlight-col">5</td>
-              </tr>
-              <tr>
-                <td>API 設計</td><td>15%</td><td>3</td><td>3</td><td class="highlight-col">5</td>
-              </tr>
-              <tr>
-                <td>客製化能力</td><td>10%</td><td>4</td><td>5</td><td class="highlight-col">3</td>
-              </tr>
-              <tr>
-                <td>響應式</td><td>5%</td><td>4</td><td>2</td><td class="highlight-col">5</td>
-              </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <td><strong>加權總分</strong></td><td><strong>100%</strong></td>
-                <td><strong>3.85</strong></td>
-                <td><strong>2.70</strong></td>
-                <td class="highlight-col"><strong>4.55</strong></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-        <p class="table-note">最終選定 <strong>Recharts</strong> 作為 Phase B 正式框架</p>
-
-        <h3>具體成果</h3>
-        <div class="evidence-list">
-          <div class="evidence-item">
-            <div class="evidence-icon">A</div>
-            <div class="evidence-content">
-              <h4>Phase A — 三庫比較</h4>
-              <p>以完全相同的 IFA 預算執行模擬資料（~150 筆，含 8 種邊界條件），分別以 Chart.js、D3.js、Recharts 實作折線圖、柱狀圖、圓餅圖、儀表板四種圖表，共 12 個圖表元件 + 3 個展示頁 + 1 個並排比較頁。</p>
+          <h3>關鍵數據</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-value">16</span>
+              <span class="metric-label">Skill 模組</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">177</span>
+              <span class="metric-label">Markdown 文件</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">v0.7.0</span>
+              <span class="metric-label">當前版本</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">4 層</span>
+              <span class="metric-label">驗證架構</span>
             </div>
           </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">B</div>
-            <div class="evidence-content">
-              <h4>Phase B — 可重用元件庫</h4>
-              <p>以 Recharts 封裝 4 個通用圖表元件（LineChart、BarChart、PieChart、Dashboard），設計 <code>useChartData</code> hook 作為資料轉換層，相容 IFA masterData / opData 格式，支援 controlled / uncontrolled 雙模式。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            </div>
-            <div class="evidence-content">
-              <h4>文件產出</h4>
-              <p>框架評估報告（六維度加權評分）+ Phase B 元件 API Reference 文件。</p>
-            </div>
-          </div>
-        </div>
 
-        <h3>POC Demo</h3>
-        <div class="demo-block">
-          <div class="demo-iframe-wrap">
-            <iframe src="chart-lab/index.html" title="Chart Lab POC Demo" loading="lazy"></iframe>
+          <h3>具體成果</h3>
+          <div class="evidence-list">
+            <div class="evidence-item">
+              <div class="evidence-icon">01</div>
+              <div class="evidence-content">
+                <h4>Skill 模組體系</h4>
+                <p>
+                  涵蓋前端 Views 開發、元件使用、API
+                  整合、樣式規範、規格書撰寫、計畫擬定、品質檢測、驗證輸出等完整開發生命週期。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">02</div>
+              <div class="evidence-content">
+                <h4>驗證框架</h4>
+                <p>
+                  四層驗證架構——L1 斷言驗證（Assertion）、L2 信任分數（Trust
+                  Score v5）、L3 技術檢查（Tech Checker）、L4
+                  合併報告（Verification Report），確保 AI
+                  生成程式碼的品質可量化追蹤。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">03</div>
+              <div class="evidence-content">
+                <h4>教育訓練</h4>
+                <p>
+                  投影片 26 張、講者稿、Q&A
+                  卡片、設置指南、觀察指南等完整訓練材料，並完成 PDF 及 PPTX
+                  版本。規格書撰寫指南 33KB / 770 行，完整訓練計畫 57KB / 872
+                  行。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">04</div>
+              <div class="evidence-content">
+                <h4>後端延伸</h4>
+                <p>
+                  已啟動後端 Controller Skill（developing-ifa-controllers），為
+                  Q2 後端 Skills.md 提前佈局。
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="demo-actions">
-            <a href="chart-lab/index.html" target="_blank" class="demo-link">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-              全螢幕開啟 Demo
+
+          <h3>Skills 全景圖</h3>
+          <div class="image-showcase">
+            <img
+              src="assets/skills-map.svg"
+              alt="skills4ifa 全景圖：16 Skills 的分層與流向"
+              loading="lazy"
+            />
+            <p class="image-caption">
+              skills4ifa 全景圖 — 16 個 Skill 模組的分層架構與工作流向
+            </p>
+          </div>
+
+          <div class="external-link-block">
+            <a
+              href="https://gitlab.ksi.com.tw/ccy/skills4ifa"
+              class="external-link"
+              target="_blank"
+              rel="noopener"
+            >
+              <span class="external-link-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 0 1-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 0 1 4.82 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0 1 18.6 2a.43.43 0 0 1 .58 0 .42.42 0 0 1 .11.18l2.44 7.51L23 13.45a.84.84 0 0 1-.35.94z"
+                  />
+                </svg>
+              </span>
+              <span>
+                <span class="external-link-title">GitLab Repository</span>
+                <span class="external-link-desc"
+                  >skills4ifa 完整原始碼 —
+                  gitlab.ksi.com.tw/ccy/skills4ifa</span
+                >
+              </span>
             </a>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ==================== C# 進階 ==================== -->
-    <section id="csharp" class="tab-panel">
-      <div class="detail-hero">
-        <div class="detail-hero-left">
-          <div class="detail-score-wrap">
-            <span class="detail-score">100</span><span class="detail-percent">%</span>
-          </div>
-          <span class="kpi-badge badge-completed">達標</span>
-        </div>
-        <div class="detail-hero-right">
-          <h2 class="detail-title">C# 進階學習</h2>
-          <div class="detail-target">
-            <span class="detail-target-label">KPI 指標</span>
-            <span class="detail-target-text">學習掌握至少「非同步設計模式」及「LINQ」的使用方法</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-body">
-        <div class="detail-narrative">
-          <h3>自我評述</h3>
-          <p>已完成非同步設計模式與 LINQ 兩大主題的系統化學習，並產出完整學習成果文件。每個概念均對照 IFA 後端 KSI Kernel 框架的實際應用場景，確保學習成果可直接應用於 Q2 後端 Skills.md 撰寫。</p>
-        </div>
-
-        <h3>學習主題</h3>
-        <div class="topic-columns">
-          <div class="topic-column">
-            <h4 class="topic-heading">
-              <span class="topic-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-              </span>
-              非同步設計模式
-            </h4>
-            <ul class="topic-list">
-              <li>async/await 基礎原理與命名慣例</li>
-              <li>Task / Task&lt;T&gt; 三種狀態管理</li>
-              <li>TAP（Task-based Asynchronous Pattern）</li>
-              <li>常見陷阱：避免 .Result/.Wait() 死鎖</li>
-              <li>async void 使用限制</li>
-            </ul>
-          </div>
-          <div class="topic-column">
-            <h4 class="topic-heading">
-              <span class="topic-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-              </span>
-              LINQ
-            </h4>
-            <ul class="topic-list">
-              <li>方法語法 vs 查詢語法</li>
-              <li>篩選投影：Where、Select、SelectMany</li>
-              <li>聚合：Count、Sum、Average、Max/Min</li>
-              <li>分組連接：GroupBy、Join</li>
-              <li>延遲執行與 IEnumerable vs IQueryable</li>
-            </ul>
-          </div>
-        </div>
-
-        <h3>IFA 實際應用對照</h3>
-        <div class="evidence-list">
-          <div class="evidence-item">
-            <div class="evidence-icon">1</div>
-            <div class="evidence-content">
-              <h4>DataTable + LINQ 查詢</h4>
-              <p>使用 <code>AsEnumerable()</code> 將 DataTable 轉換後，以 LINQ 進行篩選與欄位提取。</p>
+      <!-- ==================== 視覺化 POC ==================== -->
+      <section id="chart-poc" class="tab-panel">
+        <div class="detail-hero">
+          <div class="detail-hero-left">
+            <div class="detail-score-wrap">
+              <span class="detail-score">120</span
+              ><span class="detail-percent">%</span>
             </div>
+            <span class="kpi-badge badge-exceeded">超標完成</span>
           </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">2</div>
-            <div class="evidence-content">
-              <h4>Searched 事件資料後處理</h4>
-              <p>在 SearchedEventArgs 事件中使用 LINQ 進行資料後加工與轉換。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">3</div>
-            <div class="evidence-content">
-              <h4>多 DataTable 集合操作</h4>
-              <p>Union 合併多個 DataTable、字串陣列的 WHERE 條件組合與必填欄位檢查。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">4</div>
-            <div class="evidence-content">
-              <h4>Controller 非同步升級概念</h4>
-              <p>理解 Controller Action 從同步升級為非同步的模式，以及 Transaction 的非同步處理。</p>
+          <div class="detail-hero-right">
+            <h2 class="detail-title">AI/BI 視覺化應用研究與元件庫建立</h2>
+            <div class="detail-target">
+              <span class="detail-target-label">KPI 指標</span>
+              <span class="detail-target-text"
+                >評估 Chart.js 與 D3.js 視覺化框架，完成視覺化元件 POC
+                展示</span
+              >
             </div>
           </div>
         </div>
 
-        <div class="external-link-block">
-          <a href="csharp-notes.html" class="external-link" target="_blank">
-            <span class="external-link-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            </span>
-            <span>
-              <span class="external-link-title">完整學習筆記</span>
-              <span class="external-link-desc">C# 進階學習成果：非同步與 LINQ — 含程式碼範例與 IFA 應用對照</span>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
+        <div class="detail-body">
+          <div class="detail-narrative">
+            <h3>自我評述</h3>
+            <p>
+              原定目標為評估 Chart.js 與 D3.js 兩大視覺化框架，完成 POC
+              展示。實際執行擴展為三庫比較（加入
+              Recharts），並完成兩階段開發：Phase A 框架評估 + Phase B
+              可重用元件庫。
+            </p>
+            <p>
+              測試資料模擬 IFA IFAC010Q
+              預算執行報表的實際欄位結構，驗證元件庫可直接接入 IFA
+              資料格式，為後續 BI 視覺化導入奠定基礎。
+            </p>
+          </div>
 
-    <!-- ==================== PKM ==================== -->
-    <section id="pkm" class="tab-panel">
-      <div class="detail-hero">
-        <div class="detail-hero-left">
-          <div class="detail-score-wrap">
-            <span class="detail-score">100</span><span class="detail-percent">%</span>
-          </div>
-          <span class="kpi-badge badge-completed">達標</span>
-        </div>
-        <div class="detail-hero-right">
-          <h2 class="detail-title">Obsidian 個人知識管理系統</h2>
-          <div class="detail-target">
-            <span class="detail-target-label">KPI 指標</span>
-            <span class="detail-target-text">完成 Vault 結構與模板；累積筆記 ≥ 10 則</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-body">
-        <div class="detail-narrative">
-          <h3>自我評述</h3>
-          <p>已完成 Vault 結構設計與模板建立，並累積符合模板規範的筆記超過 10 則。PKM 系統已與日常工作流程整合，各季 KPI 產出均納入 Vault 管理。</p>
-        </div>
-
-        <h3>關鍵數據</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <span class="metric-value">9</span>
-            <span class="metric-label">分類目錄</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">8</span>
-            <span class="metric-label">標準化模板</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value">11</span>
-            <span class="metric-label">結構化筆記</span>
-          </div>
-        </div>
-
-        <h3>Vault 架構</h3>
-        <div class="vault-structure">
-          <div class="vault-tree">
-            <div class="vault-node vault-root">KSI Vault</div>
-            <div class="vault-children">
-              <div class="vault-node">KPI 追蹤</div>
-              <div class="vault-node">PKM 指南</div>
-              <div class="vault-node">專案管理</div>
-              <div class="vault-node">工作日誌</div>
-              <div class="vault-node">技術文件</div>
-              <div class="vault-node">教育訓練</div>
-              <div class="vault-node">文件模板</div>
-              <div class="vault-node">會議記錄</div>
-              <div class="vault-node">機敏資訊</div>
+          <h3>關鍵數據</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-value">3,411</span>
+              <span class="metric-label">行程式碼</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">3</span>
+              <span class="metric-label">框架評比</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">16</span>
+              <span class="metric-label">圖表元件</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">4</span>
+              <span class="metric-label">可重用元件</span>
             </div>
           </div>
-        </div>
 
-        <h3>模板系統</h3>
-        <div class="template-grid">
-          <div class="template-chip">Daily Note</div>
-          <div class="template-chip">Fleeting Note</div>
-          <div class="template-chip">Literature Note</div>
-          <div class="template-chip">Permanent Note</div>
-          <div class="template-chip">任務筆記</div>
-          <div class="template-chip">日誌</div>
-          <div class="template-chip">會議記錄</div>
-          <div class="template-chip">週回顧</div>
-        </div>
+          <h3>框架評估結果</h3>
+          <div class="eval-table-wrap">
+            <table class="eval-table">
+              <thead>
+                <tr>
+                  <th>評估維度</th>
+                  <th>權重</th>
+                  <th>Chart.js</th>
+                  <th>D3.js</th>
+                  <th class="highlight-col">Recharts</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>開發效率</td>
+                  <td>25%</td>
+                  <td>4</td>
+                  <td>2</td>
+                  <td class="highlight-col">5</td>
+                </tr>
+                <tr>
+                  <td>IFA 適配性</td>
+                  <td>25%</td>
+                  <td>4</td>
+                  <td>3</td>
+                  <td class="highlight-col">4</td>
+                </tr>
+                <tr>
+                  <td>可維護性</td>
+                  <td>20%</td>
+                  <td>4</td>
+                  <td>2</td>
+                  <td class="highlight-col">5</td>
+                </tr>
+                <tr>
+                  <td>API 設計</td>
+                  <td>15%</td>
+                  <td>3</td>
+                  <td>3</td>
+                  <td class="highlight-col">5</td>
+                </tr>
+                <tr>
+                  <td>客製化能力</td>
+                  <td>10%</td>
+                  <td>4</td>
+                  <td>5</td>
+                  <td class="highlight-col">3</td>
+                </tr>
+                <tr>
+                  <td>響應式</td>
+                  <td>5%</td>
+                  <td>4</td>
+                  <td>2</td>
+                  <td class="highlight-col">5</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td><strong>加權總分</strong></td>
+                  <td><strong>100%</strong></td>
+                  <td><strong>3.85</strong></td>
+                  <td><strong>2.70</strong></td>
+                  <td class="highlight-col"><strong>4.55</strong></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <p class="table-note">
+            最終選定 <strong>Recharts</strong> 作為 Phase B 正式框架
+          </p>
 
-        <h3>PKM 指南體系</h3>
-        <div class="evidence-list">
-          <div class="evidence-item">
-            <div class="evidence-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-            </div>
-            <div class="evidence-content">
-              <p>建立 8 篇系統性指南：「為什麼寫筆記」、「筆記類型速查」、「每日工作流」、「筆記寫作指引」、「回顧與連結」、「AI 可讀性規範」、「團隊入門指南」、「Vault 結構地圖」，為團隊推廣 PKM 奠定基礎。</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="external-link-block">
-          <a href="pkm-templates.html" class="external-link" target="_blank">
-            <span class="external-link-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
-            </span>
-            <span>
-              <span class="external-link-title">模板系統展示</span>
-              <span class="external-link-desc">8 個標準化模板 — Daily Note、Fleeting Note、Literature Note、Permanent Note 等</span>
-            </span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== iPAS ==================== -->
-    <section id="ipas" class="tab-panel">
-      <div class="detail-hero">
-        <div class="detail-hero-left">
-          <div class="detail-score-wrap failed">
-            <span class="detail-score">0</span><span class="detail-percent">%</span>
-          </div>
-          <span class="kpi-badge badge-failed">順延至 Q2</span>
-        </div>
-        <div class="detail-hero-right">
-          <h2 class="detail-title">iPAS AI 應用規劃師 初級證照</h2>
-          <div class="detail-target">
-            <span class="detail-target-label">KPI 指標</span>
-            <span class="detail-target-text">完成模擬試題 ≥ 3 回；通過考試</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-body">
-        <div class="detail-narrative">
-          <h3>自我評述</h3>
-          <p>本季因 skills4ifa 開發工作量遠超預期（從原定 1 份 Skills.md 擴展為 16 個 Skill 模組 + 驗證框架 + 教育訓練材料），且視覺化 POC 亦擴展為三庫比較，導致 iPAS 學習時間被壓縮。</p>
-          <p>經評估後決定將 iPAS 初級與 Q2 原定之中階合併規劃，待確認下一梯次考試時間後統一安排讀書計畫。</p>
-        </div>
-
-        <h3>考試梯次</h3>
-        <div class="metrics-grid">
-          <div class="metric-card">
-            <span class="metric-value" style="font-size:20px;">115/05/16</span>
-            <span class="metric-label">初級 第二次（六）</span>
-          </div>
-          <div class="metric-card">
-            <span class="metric-value" style="font-size:20px;">115/11/14</span>
-            <span class="metric-label">中級 第二次（六）</span>
-          </div>
-        </div>
-
-        <div class="postpone-note">
-          <div class="postpone-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          </div>
-          <div class="postpone-content">
-            <h4>Q2 讀書計畫 — iPAS 初級（目標 5/16 應考）</h4>
-            <p>中級考試為 11/14，落在 Q4，故 Q2 聚焦初級備考。</p>
-          </div>
-        </div>
-
-        <h3>讀書計畫</h3>
-        <div class="evidence-list">
-          <div class="evidence-item">
-            <div class="evidence-icon">W1</div>
-            <div class="evidence-content">
-              <h4>4/1 — 4/11：基礎概念</h4>
-              <p>AI 基礎理論、機器學習概論、深度學習基礎。取得官方教材與歷屆題庫，完成第 1 回模擬試題。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">W2</div>
-            <div class="evidence-content">
-              <h4>4/14 — 4/25：應用領域</h4>
-              <p>AI 應用場景（NLP、CV、推薦系統）、資料前處理與特徵工程、模型評估指標。完成第 2 回模擬試題。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">W3</div>
-            <div class="evidence-content">
-              <h4>4/28 — 5/9：進階主題與弱項補強</h4>
-              <p>AI 倫理與法規、產業應用案例、模型部署概念。完成第 3 回模擬試題，針對弱項集中補強。</p>
-            </div>
-          </div>
-          <div class="evidence-item">
-            <div class="evidence-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            </div>
-            <div class="evidence-content">
-              <h4>5/12 — 5/16：最終衝刺</h4>
-              <p>全範圍模擬測驗、錯題回顧、考前重點整理。5/16（六）應考。</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== 例行工作 ==================== -->
-    <section id="routine" class="tab-panel">
-      <div class="detail-hero">
-        <div class="detail-hero-left">
-          <div class="detail-score-wrap">
-            <span class="detail-score routine-icon">
-              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </span>
-          </div>
-        </div>
-        <div class="detail-hero-right">
-          <h2 class="detail-title">例行工作</h2>
-          <div class="detail-target">
-            <span class="detail-target-label">類別</span>
-            <span class="detail-target-text">協助其他部門技術 / 動態表單規劃</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="detail-body">
-        <!-- 協助其他部門 -->
-        <div class="routine-section">
-          <div class="routine-header">
-            <div>
-              <h3>協助其他部門技術（規劃/開發）</h3>
-              <div class="detail-target">
-                <span class="detail-target-label">KPI 指標</span>
-                <span class="detail-target-text">需求解決率至少 95%</span>
+          <h3>具體成果</h3>
+          <div class="evidence-list">
+            <div class="evidence-item">
+              <div class="evidence-icon">A</div>
+              <div class="evidence-content">
+                <h4>Phase A — 三庫比較</h4>
+                <p>
+                  以完全相同的 IFA 預算執行模擬資料（~150 筆，含 8
+                  種邊界條件），分別以 Chart.js、D3.js、Recharts
+                  實作折線圖、柱狀圖、圓餅圖、儀表板四種圖表，共 12 個圖表元件 +
+                  3 個展示頁 + 1 個並排比較頁。
+                </p>
               </div>
             </div>
-            <div class="routine-score-block">
-              <span class="routine-score">80%</span>
-              <span class="kpi-badge badge-partial">持續中</span>
-            </div>
-          </div>
-          <div class="detail-narrative">
-            <p>本季協助 V7 部門開發「採購網系統」，將開發流程導入 skills4ifa 框架，透過 Skill 模組化的方式協助該部門加速開發節奏。此外，透過 skills4ifa 的內部教育訓練，協助同仁認識 Agent Skills 的概念與操作方式，並即時排除同仁在使用上遭遇的問題。</p>
-          </div>
-        </div>
-
-        <div class="section-divider"></div>
-
-        <!-- 動態表單 -->
-        <div class="routine-section">
-          <div class="routine-header">
-            <div>
-              <h3>協助研發開發產品化：動態表單規劃</h3>
-              <div class="detail-target">
-                <span class="detail-target-label">KPI 指標</span>
-                <span class="detail-target-text">交辦工單完成率 100%</span>
+            <div class="evidence-item">
+              <div class="evidence-icon">B</div>
+              <div class="evidence-content">
+                <h4>Phase B — 可重用元件庫</h4>
+                <p>
+                  以 Recharts 封裝 4
+                  個通用圖表元件（LineChart、BarChart、PieChart、Dashboard），設計
+                  <code>useChartData</code> hook 作為資料轉換層，相容 IFA
+                  masterData / opData 格式，支援 controlled / uncontrolled
+                  雙模式。
+                </p>
               </div>
             </div>
-            <div class="routine-score-block">
-              <span class="routine-score muted">N/A</span>
-              <span class="kpi-badge badge-na">無工單</span>
+            <div class="evidence-item">
+              <div class="evidence-icon">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                  />
+                  <polyline points="14 2 14 8 20 8" />
+                </svg>
+              </div>
+              <div class="evidence-content">
+                <h4>文件產出</h4>
+                <p>
+                  框架評估報告（六維度加權評分）+ Phase B 元件 API Reference
+                  文件。
+                </p>
+              </div>
             </div>
           </div>
-          <div class="detail-narrative">
-            <p>本季動態表單規劃相關工作已由同仁完成，未產生交辦工單，故無對應執行成果。</p>
+
+          <h3>POC Demo</h3>
+          <div class="demo-block">
+            <div class="demo-iframe-wrap">
+              <iframe
+                src="chart-lab/index.html"
+                title="Chart Lab POC Demo"
+                loading="lazy"
+              ></iframe>
+            </div>
+            <div class="demo-actions">
+              <a href="chart-lab/index.html" target="_blank" class="demo-link">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                  />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                全螢幕開啟 Demo
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-  </main>
+      <!-- ==================== C# 進階 ==================== -->
+      <section id="csharp" class="tab-panel">
+        <div class="detail-hero">
+          <div class="detail-hero-left">
+            <div class="detail-score-wrap">
+              <span class="detail-score">100</span
+              ><span class="detail-percent">%</span>
+            </div>
+            <span class="kpi-badge badge-completed">達標</span>
+          </div>
+          <div class="detail-hero-right">
+            <h2 class="detail-title">C# 進階學習</h2>
+            <div class="detail-target">
+              <span class="detail-target-label">KPI 指標</span>
+              <span class="detail-target-text"
+                >學習掌握至少「非同步設計模式」及「LINQ」的使用方法</span
+              >
+            </div>
+          </div>
+        </div>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <p>115 年度 KPI 自評 &mdash; 張永霖 &mdash; 最後更新 2026/04/01</p>
-  </footer>
+        <div class="detail-body">
+          <div class="detail-narrative">
+            <h3>自我評述</h3>
+            <p>
+              已完成非同步設計模式與 LINQ
+              兩大主題的系統化學習，並產出完整學習成果文件。每個概念均對照 IFA
+              後端 KSI Kernel 框架的實際應用場景，確保學習成果可直接應用於 Q2
+              後端 Skills.md 撰寫。
+            </p>
+          </div>
 
-  <script src="app.js"></script>
-</body>
+          <h3>學習主題</h3>
+          <div class="topic-columns">
+            <div class="topic-column">
+              <h4 class="topic-heading">
+                <span class="topic-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                  </svg>
+                </span>
+                非同步設計模式
+              </h4>
+              <ul class="topic-list">
+                <li>async/await 基礎原理與命名慣例</li>
+                <li>Task / Task&lt;T&gt; 三種狀態管理</li>
+                <li>TAP（Task-based Asynchronous Pattern）</li>
+                <li>常見陷阱：避免 .Result/.Wait() 死鎖</li>
+                <li>async void 使用限制</li>
+              </ul>
+            </div>
+            <div class="topic-column">
+              <h4 class="topic-heading">
+                <span class="topic-icon">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <line x1="8" y1="6" x2="21" y2="6" />
+                    <line x1="8" y1="12" x2="21" y2="12" />
+                    <line x1="8" y1="18" x2="21" y2="18" />
+                    <line x1="3" y1="6" x2="3.01" y2="6" />
+                    <line x1="3" y1="12" x2="3.01" y2="12" />
+                    <line x1="3" y1="18" x2="3.01" y2="18" />
+                  </svg>
+                </span>
+                LINQ
+              </h4>
+              <ul class="topic-list">
+                <li>方法語法 vs 查詢語法</li>
+                <li>篩選投影：Where、Select、SelectMany</li>
+                <li>聚合：Count、Sum、Average、Max/Min</li>
+                <li>分組連接：GroupBy、Join</li>
+                <li>延遲執行與 IEnumerable vs IQueryable</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>IFA 實際應用對照</h3>
+          <div class="evidence-list">
+            <div class="evidence-item">
+              <div class="evidence-icon">1</div>
+              <div class="evidence-content">
+                <h4>DataTable + LINQ 查詢</h4>
+                <p>
+                  使用 <code>AsEnumerable()</code> 將 DataTable 轉換後，以 LINQ
+                  進行篩選與欄位提取。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">2</div>
+              <div class="evidence-content">
+                <h4>Searched 事件資料後處理</h4>
+                <p>
+                  在 SearchedEventArgs 事件中使用 LINQ 進行資料後加工與轉換。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">3</div>
+              <div class="evidence-content">
+                <h4>多 DataTable 集合操作</h4>
+                <p>
+                  Union 合併多個 DataTable、字串陣列的 WHERE
+                  條件組合與必填欄位檢查。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">4</div>
+              <div class="evidence-content">
+                <h4>Controller 非同步升級概念</h4>
+                <p>
+                  理解 Controller Action 從同步升級為非同步的模式，以及
+                  Transaction 的非同步處理。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="external-link-block">
+            <a href="csharp-notes.html" class="external-link" target="_blank">
+              <span class="external-link-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+                  />
+                  <polyline points="14 2 14 8 20 8" />
+                  <line x1="16" y1="13" x2="8" y2="13" />
+                  <line x1="16" y1="17" x2="8" y2="17" />
+                  <polyline points="10 9 9 9 8 9" />
+                </svg>
+              </span>
+              <span>
+                <span class="external-link-title">完整學習筆記</span>
+                <span class="external-link-desc"
+                  >C# 進階學習成果：非同步與 LINQ — 含程式碼範例與 IFA
+                  應用對照</span
+                >
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== PKM ==================== -->
+      <section id="pkm" class="tab-panel">
+        <div class="detail-hero">
+          <div class="detail-hero-left">
+            <div class="detail-score-wrap">
+              <span class="detail-score">100</span
+              ><span class="detail-percent">%</span>
+            </div>
+            <span class="kpi-badge badge-completed">達標</span>
+          </div>
+          <div class="detail-hero-right">
+            <h2 class="detail-title">Obsidian 個人知識管理系統</h2>
+            <div class="detail-target">
+              <span class="detail-target-label">KPI 指標</span>
+              <span class="detail-target-text"
+                >完成 Vault 結構與模板；累積筆記 ≥ 10 則</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-body">
+          <div class="detail-narrative">
+            <h3>自我評述</h3>
+            <p>
+              已完成 Vault 結構設計與模板建立，並累積符合模板規範的筆記超過 10
+              則。PKM 系統已與日常工作流程整合，各季 KPI 產出均納入 Vault 管理。
+            </p>
+          </div>
+
+          <h3>關鍵數據</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-value">9</span>
+              <span class="metric-label">分類目錄</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">8</span>
+              <span class="metric-label">標準化模板</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value">11</span>
+              <span class="metric-label">結構化筆記</span>
+            </div>
+          </div>
+
+          <h3>Vault 架構</h3>
+          <div class="vault-structure">
+            <div class="vault-tree">
+              <div class="vault-node vault-root">KSI Vault</div>
+              <div class="vault-children">
+                <div class="vault-node">KPI 追蹤</div>
+                <div class="vault-node">PKM 指南</div>
+                <div class="vault-node">專案管理</div>
+                <div class="vault-node">工作日誌</div>
+                <div class="vault-node">技術文件</div>
+                <div class="vault-node">教育訓練</div>
+                <div class="vault-node">文件模板</div>
+                <div class="vault-node">會議記錄</div>
+                <div class="vault-node">機敏資訊</div>
+              </div>
+            </div>
+          </div>
+
+          <h3>模板系統</h3>
+          <div class="template-grid">
+            <div class="template-chip">Daily Note</div>
+            <div class="template-chip">Fleeting Note</div>
+            <div class="template-chip">Literature Note</div>
+            <div class="template-chip">Permanent Note</div>
+            <div class="template-chip">任務筆記</div>
+            <div class="template-chip">日誌</div>
+            <div class="template-chip">會議記錄</div>
+            <div class="template-chip">週回顧</div>
+          </div>
+
+          <h3>PKM 指南體系</h3>
+          <div class="evidence-list">
+            <div class="evidence-item">
+              <div class="evidence-icon">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
+                  <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
+                </svg>
+              </div>
+              <div class="evidence-content">
+                <p>
+                  建立 8
+                  篇系統性指南：「為什麼寫筆記」、「筆記類型速查」、「每日工作流」、「筆記寫作指引」、「回顧與連結」、「AI
+                  可讀性規範」、「團隊入門指南」、「Vault 結構地圖」，為團隊推廣
+                  PKM 奠定基礎。
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="external-link-block">
+            <a href="pkm-templates.html" class="external-link" target="_blank">
+              <span class="external-link-icon">
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                  <line x1="3" y1="9" x2="21" y2="9" />
+                  <line x1="9" y1="21" x2="9" y2="9" />
+                </svg>
+              </span>
+              <span>
+                <span class="external-link-title">模板系統展示</span>
+                <span class="external-link-desc"
+                  >8 個標準化模板 — Daily Note、Fleeting Note、Literature
+                  Note、Permanent Note 等</span
+                >
+              </span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== iPAS ==================== -->
+      <section id="ipas" class="tab-panel">
+        <div class="detail-hero">
+          <div class="detail-hero-left">
+            <div class="detail-score-wrap failed">
+              <span class="detail-score">0</span
+              ><span class="detail-percent">%</span>
+            </div>
+            <span class="kpi-badge badge-failed">順延至 Q2</span>
+          </div>
+          <div class="detail-hero-right">
+            <h2 class="detail-title">iPAS AI 應用規劃師 初級證照</h2>
+            <div class="detail-target">
+              <span class="detail-target-label">KPI 指標</span>
+              <span class="detail-target-text"
+                >完成模擬試題 ≥ 3 回；通過考試</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-body">
+          <div class="detail-narrative">
+            <h3>自我評述</h3>
+            <p>
+              本季因 skills4ifa 開發工作量遠超預期（從原定 1 份 Skills.md 擴展為
+              16 個 Skill 模組 + 驗證框架 + 教育訓練材料），且視覺化 POC
+              亦擴展為三庫比較，導致 iPAS 學習時間被壓縮。
+            </p>
+            <p>
+              經評估後決定將 iPAS 初級與 Q2
+              原定之中階合併規劃，待確認下一梯次考試時間後統一安排讀書計畫。
+            </p>
+          </div>
+
+          <h3>考試梯次</h3>
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-value" style="font-size: 20px"
+                >115/05/16</span
+              >
+              <span class="metric-label">初級 第二次（六）</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-value" style="font-size: 20px"
+                >115/11/14</span
+              >
+              <span class="metric-label">中級 第二次（六）</span>
+            </div>
+          </div>
+
+          <div class="postpone-note">
+            <div class="postpone-icon">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+            </div>
+            <div class="postpone-content">
+              <h4>Q2 讀書計畫 — iPAS 初級（目標 5/16 應考）</h4>
+              <p>中級考試為 11/14，落在 Q4，故 Q2 聚焦初級備考。</p>
+            </div>
+          </div>
+
+          <h3>讀書計畫</h3>
+          <div class="evidence-list">
+            <div class="evidence-item">
+              <div class="evidence-icon">W1</div>
+              <div class="evidence-content">
+                <h4>4/1 — 4/11：基礎概念</h4>
+                <p>
+                  AI
+                  基礎理論、機器學習概論、深度學習基礎。取得官方教材與歷屆題庫，完成第
+                  1 回模擬試題。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">W2</div>
+              <div class="evidence-content">
+                <h4>4/14 — 4/25：應用領域</h4>
+                <p>
+                  AI
+                  應用場景（NLP、CV、推薦系統）、資料前處理與特徵工程、模型評估指標。完成第
+                  2 回模擬試題。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">W3</div>
+              <div class="evidence-content">
+                <h4>4/28 — 5/9：進階主題與弱項補強</h4>
+                <p>
+                  AI 倫理與法規、產業應用案例、模型部署概念。完成第 3
+                  回模擬試題，針對弱項集中補強。
+                </p>
+              </div>
+            </div>
+            <div class="evidence-item">
+              <div class="evidence-icon">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              </div>
+              <div class="evidence-content">
+                <h4>5/12 — 5/16：最終衝刺</h4>
+                <p>全範圍模擬測驗、錯題回顧、考前重點整理。5/16（六）應考。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== 例行工作 ==================== -->
+      <section id="routine" class="tab-panel">
+        <div class="detail-hero">
+          <div class="detail-hero-left">
+            <div class="detail-score-wrap">
+              <span class="detail-score routine-icon">
+                <svg
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </span>
+            </div>
+          </div>
+          <div class="detail-hero-right">
+            <h2 class="detail-title">例行工作</h2>
+            <div class="detail-target">
+              <span class="detail-target-label">類別</span>
+              <span class="detail-target-text"
+                >協助其他部門技術 / 動態表單規劃</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="detail-body">
+          <!-- 協助其他部門 -->
+          <div class="routine-section">
+            <div class="routine-header">
+              <div>
+                <h3>協助其他部門技術（規劃/開發）</h3>
+                <div class="detail-target">
+                  <span class="detail-target-label">KPI 指標</span>
+                  <span class="detail-target-text">需求解決率至少 95%</span>
+                </div>
+              </div>
+              <div class="routine-score-block">
+                <span class="routine-score">80%</span>
+                <span class="kpi-badge badge-partial">持續中</span>
+              </div>
+            </div>
+            <div class="detail-narrative">
+              <p>
+                本季協助 V7 部門開發「採購網系統」，將開發流程導入 skills4ifa
+                框架，透過 Skill 模組化的方式協助該部門加速開發節奏。此外，透過
+                skills4ifa 的內部教育訓練，協助同仁認識 Agent Skills
+                的概念與操作方式，並即時排除同仁在使用上遭遇的問題。
+              </p>
+            </div>
+          </div>
+
+          <div class="section-divider"></div>
+
+          <!-- 動態表單 -->
+          <div class="routine-section">
+            <div class="routine-header">
+              <div>
+                <h3>協助研發開發產品化：動態表單規劃</h3>
+                <div class="detail-target">
+                  <span class="detail-target-label">KPI 指標</span>
+                  <span class="detail-target-text">交辦工單完成率 100%</span>
+                </div>
+              </div>
+              <div class="routine-score-block">
+                <span class="routine-score muted">N/A</span>
+                <span class="kpi-badge badge-na">無工單</span>
+              </div>
+            </div>
+            <div class="detail-narrative">
+              <p>
+                本季動態表單規劃相關工作已由同仁完成，未產生交辦工單，故無對應執行成果。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <p>115 年度 KPI 自評 &mdash; 張永霖 &mdash; 最後更新 2026/04/01</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
 </html>

@@ -506,81 +506,304 @@
       <!-- ===== 二、LINQ ===== -->
       <h2>二、LINQ（Language Integrated Query）</h2>
 
-      <h3>2.1 什麼是 LINQ？</h3>
-      <p>LINQ 是 C# 內建的查詢語法，讓你用一致的方式查詢各種資料來源。</p>
+      <h3>2.1 問題意識：LINQ 出現前，開發者在痛苦什麼？</h3>
 
-      <h3>2.2 兩種語法</h3>
+      <p>在 LINQ 出現前（C# 2.0 以前），篩選、排序、聚合都要手動寫迴圈。問題不只是「程式碼長」，而是邏輯分散 — 篩選、排序、投影三個動作分開寫，看不出整體意圖：</p>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp — LINQ 之前</span></div>
+        <pre><code><span class="cm">// 需求：從員工清單取得 IT 部門、按薪資降冪、只取姓名</span>
+<span class="tp">List</span>&lt;<span class="tp">Employee</span>&gt; filtered <span class="op">=</span> <span class="kw">new</span> <span class="tp">List</span>&lt;<span class="tp">Employee</span>&gt;();
+<span class="kw">foreach</span> (<span class="kw">var</span> emp <span class="kw">in</span> employees)
+{
+    <span class="kw">if</span> (emp.Department <span class="op">==</span> <span class="str">"IT"</span>)
+        filtered.<span class="fn">Add</span>(emp);
+}
+filtered.<span class="fn">Sort</span>((a, b) <span class="op">=></span> b.Salary.<span class="fn">CompareTo</span>(a.Salary));
+<span class="tp">List</span>&lt;<span class="tp">string</span>&gt; names <span class="op">=</span> <span class="kw">new</span> <span class="tp">List</span>&lt;<span class="tp">string</span>&gt;();
+<span class="kw">foreach</span> (<span class="kw">var</span> emp <span class="kw">in</span> filtered)
+    names.<span class="fn">Add</span>(emp.Name);
+<span class="cm">// 12 行，邏輯分散、難以一眼看出意圖</span></code></pre>
+      </div>
+
+      <h3>2.2 LINQ 的本質：宣告式程式設計</h3>
+
+      <blockquote>📖 官方定義：「LINQ 提供一致的模型，讓您使用各種資料來源和格式的資料。」<br>— <a href="https://learn.microsoft.com/zh-tw/dotnet/csharp/linq/" target="_blank" style="color:var(--gold);">Microsoft Docs: LINQ 概觀</a></blockquote>
+
+      <p>LINQ 的核心思維轉換是從<strong>命令式</strong>（告訴電腦怎麼做）到<strong>宣告式</strong>（告訴電腦要什麼）：</p>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp — 思維對比</span></div>
+        <pre><code><span class="cm">// 命令式（舊）：告訴電腦「怎麼做」</span>
+<span class="kw">var</span> result <span class="op">=</span> <span class="kw">new</span> <span class="tp">List</span>&lt;<span class="tp">string</span>&gt;();
+<span class="kw">foreach</span> (<span class="kw">var</span> emp <span class="kw">in</span> employees)
+    <span class="kw">if</span> (emp.Department <span class="op">==</span> <span class="str">"IT"</span>)
+        result.<span class="fn">Add</span>(emp.Name);
+
+<span class="cm">// 宣告式（LINQ）：告訴電腦「要什麼」</span>
+<span class="kw">var</span> result <span class="op">=</span> employees
+    .<span class="fn">Where</span>(e <span class="op">=></span> e.Department <span class="op">==</span> <span class="str">"IT"</span>)
+    .<span class="fn">Select</span>(e <span class="op">=></span> e.Name)
+    .<span class="fn">ToList</span>();</code></pre>
+      </div>
+
+      <p>LINQ 能查 List、DataTable、XML 甚至資料庫，原因是它建立在兩個介面上：</p>
       <ul>
-        <li><strong>方法語法（Method Syntax）</strong> — 推薦</li>
-        <li><strong>查詢語法（Query Syntax）</strong></li>
+        <li><code>IEnumerable&lt;T&gt;</code> — LINQ to Objects（記憶體集合）</li>
+        <li><code>IQueryable&lt;T&gt;</code> — LINQ to SQL（EF Core 等，可翻譯成 SQL 查詢）</li>
       </ul>
+      <p>任何實作 <code>IEnumerable&lt;T&gt;</code> 的型別都可以使用 LINQ。這就是為什麼 <code>DataTable.AsEnumerable()</code> 之後就能用 LINQ — 它把 DataTable 轉成了可迭代的序列。</p>
 
-      <h3>2.3 常用 LINQ 方法</h3>
+      <h3>2.3 Lambda 表達式：可傳遞的邏輯片段</h3>
 
-      <h4>篩選與投影</h4>
-      <ul class="tag-list">
-        <li>Where</li>
-        <li>Select</li>
-        <li>SelectMany</li>
-        <li>Distinct</li>
-      </ul>
+      <p>LINQ 方法接受的 <code>x =&gt; x.Age &gt; 30</code> 叫做 Lambda 表達式，本質是「一段可以當參數傳遞的程式邏輯」：</p>
 
-      <h4>排序</h4>
-      <ul class="tag-list">
-        <li>OrderBy</li>
-        <li>OrderByDescending</li>
-        <li>ThenBy</li>
-      </ul>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="cm">// Lambda 的完整形式</span>
+(<span class="tp">Employee</span> e) <span class="op">=></span> { <span class="kw">return</span> e.Department <span class="op">==</span> <span class="str">"IT"</span>; }
 
-      <h4>聚合</h4>
-      <ul class="tag-list">
-        <li>Count</li>
-        <li>Sum</li>
-        <li>Average</li>
-        <li>Max / Min</li>
-        <li>Aggregate</li>
-      </ul>
+<span class="cm">// 簡化形式（型別可推斷、單行可省略 return）</span>
+e <span class="op">=></span> e.Department <span class="op">==</span> <span class="str">"IT"</span>
 
-      <h4>分組與連接</h4>
-      <ul class="tag-list">
-        <li>GroupBy</li>
-        <li>Join</li>
-        <li>GroupJoin</li>
-      </ul>
+<span class="cm">// 傳入 LINQ — 這裡就是在傳遞「篩選邏輯」給 Where 方法</span>
+employees.<span class="fn">Where</span>(e <span class="op">=></span> e.Department <span class="op">==</span> <span class="str">"IT"</span>)</code></pre>
+      </div>
 
-      <h4>判斷</h4>
-      <ul class="tag-list">
-        <li>Any</li>
-        <li>All</li>
-        <li>Contains</li>
-      </ul>
+      <h3>2.4 核心機制：延遲執行（Deferred Execution）</h3>
 
-      <h4>取值</h4>
-      <ul class="tag-list">
-        <li>First</li>
-        <li>FirstOrDefault</li>
-        <li>Single</li>
-        <li>SingleOrDefault</li>
-      </ul>
+      <p>LINQ 查詢不是你寫下那一刻執行的，而是在你取用結果時才執行：</p>
 
-      <h3>2.4 IEnumerable&lt;T&gt; 深入理解</h3>
-      <ul>
-        <li><strong>延遲執行（Deferred Execution）</strong></li>
-        <li><strong>IEnumerable vs IQueryable</strong></li>
-        <li><strong>避免多次 enumerate 同一個 IEnumerable</strong></li>
-      </ul>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="kw">var</span> query <span class="op">=</span> employees.<span class="fn">Where</span>(e <span class="op">=></span> e.IsActive);
+<span class="cm">// 此時：沒有任何迴圈跑過，只是建立了「查詢描述」</span>
 
-      <h3>2.5 在 IFA 後端的實際應用</h3>
-      <ul>
-        <li><strong>場景 1</strong>：DataTable 查詢（<code>AsEnumerable</code> + LINQ）</li>
-        <li><strong>場景 2</strong>：Searched 事件中對查詢結果後加工</li>
-        <li><strong>場景 3</strong>：集合操作（多 DataTable Union）</li>
-        <li><strong>場景 4</strong>：string 集合處理（WHERE 條件組合、必填欄位檢查）</li>
-      </ul>
+<span class="kw">foreach</span> (<span class="kw">var</span> e <span class="kw">in</span> query) { }  <span class="cm">// ← 這裡才真正執行</span>
+<span class="kw">var</span> list <span class="op">=</span> query.<span class="fn">ToList</span>();     <span class="cm">// ← 或這裡</span></code></pre>
+      </div>
+
+      <p>延遲執行的陷阱：同一個 query 用多次，就跑多次迴圈。</p>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="cm">// ❌ 效能陷阱：每次使用 query 都會重跑一次迴圈</span>
+<span class="kw">var</span> query <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>().<span class="fn">Where</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"STATUS"</span>) <span class="op">==</span> <span class="str">"A"</span>);
+<span class="kw">var</span> count <span class="op">=</span> query.<span class="fn">Count</span>();   <span class="cm">// 跑一次</span>
+<span class="kw">var</span> first <span class="op">=</span> query.<span class="fn">First</span>();   <span class="cm">// 再跑一次</span>
+
+<span class="cm">// ✅ 先具體化（materialize），再使用</span>
+<span class="kw">var</span> list <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">Where</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"STATUS"</span>) <span class="op">==</span> <span class="str">"A"</span>)
+    .<span class="fn">ToList</span>();  <span class="cm">// 只跑一次</span>
+<span class="kw">var</span> count <span class="op">=</span> list.Count;  <span class="cm">// O(1)</span>
+<span class="kw">var</span> first <span class="op">=</span> list[<span class="num">0</span>];     <span class="cm">// O(1)</span></code></pre>
+      </div>
+
+      <h3>2.5 常用方法（以「解決什麼問題」為主軸）</h3>
+
+      <h4>「我需要篩選」→ Where</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="kw">var</span> activeRows <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">Where</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"STATUS"</span>) <span class="op">==</span> <span class="str">"A"</span>);</code></pre>
+      </div>
+
+      <h4>「我需要轉換格式」→ Select</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="cm">// 只要欄位值，不要整個 DataRow</span>
+<span class="kw">var</span> fundCodes <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">Select</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"FUND_NO"</span>))
+    .<span class="fn">Distinct</span>()
+    .<span class="fn">ToList</span>();
+<span class="cm">// 結果：List&lt;string&gt;，而不是 IEnumerable&lt;DataRow&gt;</span></code></pre>
+      </div>
+
+      <h4>「我需要統計」→ Count / Sum / Average</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="kw">int</span> activeCount <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">Count</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"STATUS"</span>) <span class="op">==</span> <span class="str">"A"</span>);
+
+<span class="kw">decimal</span> total <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">Sum</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">decimal</span>&gt;(<span class="str">"AMOUNT"</span>));</code></pre>
+      </div>
+
+      <h4>「我需要分組統計」→ GroupBy</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="kw">var</span> byFund <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">GroupBy</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"FUND_NO"</span>))
+    .<span class="fn">Select</span>(g <span class="op">=></span> <span class="kw">new</span> {
+        FundNo <span class="op">=</span> g.Key,
+        TotalAmount <span class="op">=</span> g.<span class="fn">Sum</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">decimal</span>&gt;(<span class="str">"AMOUNT"</span>)),
+        Count <span class="op">=</span> g.<span class="fn">Count</span>()
+    });</code></pre>
+      </div>
+
+      <h4>「我需要快速查找」→ ToDictionary</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="cm">// ❌ 每次都 LINQ 查，O(n)</span>
+<span class="kw">var</span> name <span class="op">=</span> configs.<span class="fn">First</span>(c <span class="op">=></span> c.Code <span class="op">==</span> targetCode).Name;
+
+<span class="cm">// ✅ 先轉成 Dictionary，之後查詢 O(1)</span>
+<span class="kw">var</span> configDict <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">ToDictionary</span>(
+        r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"CODE"</span>),
+        r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"NAME"</span>)
+    );
+<span class="tp">string</span> name <span class="op">=</span> configDict[<span class="str">"TARGET_CODE"</span>];</code></pre>
+      </div>
+
+      <h4>「我需要驗證」→ Any / All</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="cm">// 確認所有必填欄位都有值</span>
+<span class="tp">string</span>[] required <span class="op">=</span> { <span class="str">"FUND_NO"</span>, <span class="str">"YEAR"</span>, <span class="str">"NAME"</span> };
+<span class="kw">bool</span> allFilled <span class="op">=</span> required.<span class="fn">All</span>(f <span class="op">=></span> <span class="op">!</span><span class="tp">string</span>.<span class="fn">IsNullOrEmpty</span>(row[f]<span class="op">?.</span><span class="fn">ToString</span>()));</code></pre>
+      </div>
+
+      <h4>「我需要取特定一筆」→ First / Single / FirstOrDefault</h4>
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr><th>方法</th><th>找不到時</th><th>找到多筆時</th><th>使用時機</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>First</code></td><td class="danger">拋例外</td><td>回傳第一筆</td><td>確定有資料，要第一筆</td></tr>
+            <tr><td><code>FirstOrDefault</code></td><td>回傳 null</td><td>回傳第一筆</td><td>不確定有沒有資料</td></tr>
+            <tr><td><code>Single</code></td><td class="danger">拋例外</td><td class="danger">拋例外</td><td>業務上保證唯一一筆</td></tr>
+            <tr><td><code>SingleOrDefault</code></td><td>回傳 null</td><td class="danger">拋例外</td><td>可能不存在，但不允許多筆</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>IFA 建議：查主鍵資料用 <code>SingleOrDefault</code>（多筆代表資料異常，應該報錯）；查條件資料用 <code>FirstOrDefault</code>。</p>
+
+      <h3>2.6 在 IFA 後端的實際應用</h3>
+
+      <p>IFA 後端使用 DataTable + 原生 SQL，LINQ 主要用於記憶體內的資料後處理。</p>
+
+      <h4>情境 A：Init — 整理下拉選單資料</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="tp">DataTable</span> dt <span class="op">=</span> l_dbc.<span class="fn">FillDataTable</span>(sql, ht);
+
+<span class="kw">var</span> dropdownItems <span class="op">=</span> dt.<span class="fn">AsEnumerable</span>()
+    .<span class="fn">Where</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"STATUS"</span>) <span class="op">!=</span> <span class="str">"D"</span>)
+    .<span class="fn">OrderByDescending</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"YEAR"</span>))
+    .<span class="fn">Select</span>(r <span class="op">=></span> <span class="kw">new</span> {
+        Code <span class="op">=</span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"FUND_NO"</span>),
+        Name <span class="op">=</span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"FUND_NAME"</span>)
+    })
+    .<span class="fn">ToList</span>();</code></pre>
+      </div>
+
+      <h4>情境 B：Searched 後處理 — 欄位顯示轉換</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="kw">void</span> <span class="fn">l_Master_Searched</span>(<span class="kw">object</span> sender, <span class="tp">SearchedEventArgs</span> e)
+{
+    <span class="cm">// 取出所有不重複的年度，供篩選條件使用</span>
+    <span class="kw">var</span> years <span class="op">=</span> e.masterData.<span class="fn">AsEnumerable</span>()
+        .<span class="fn">Select</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"YEAR"</span>))
+        .<span class="fn">Distinct</span>()
+        .<span class="fn">OrderByDescending</span>(y <span class="op">=></span> y)
+        .<span class="fn">ToList</span>();
+}</code></pre>
+      </div>
+
+      <h4>情境 C：存檔前驗證 — 動態必填檢查</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="tp">string</span>[] required <span class="op">=</span> <span class="kw">new</span>[] { <span class="str">"FUND_NO"</span>, <span class="str">"YEAR"</span>, <span class="str">"CODE"</span>, <span class="str">"NAME"</span> };
+
+<span class="kw">var</span> emptyFields <span class="op">=</span> required
+    .<span class="fn">Where</span>(f <span class="op">=></span> <span class="tp">string</span>.<span class="fn">IsNullOrEmpty</span>(newRow[f]<span class="op">?.</span><span class="fn">ToString</span>()))
+    .<span class="fn">ToList</span>();
+
+<span class="kw">if</span> (emptyFields.<span class="fn">Any</span>())
+{
+    e.cancel <span class="op">=</span> <span class="kw">true</span>;
+    e.cancelMsg <span class="op">=</span> <span class="str">$"以下欄位不可為空：<span class="op">{</span><span class="tp">string</span>.<span class="fn">Join</span>(<span class="str">"、"</span>, emptyFields)<span class="op">}</span>"</span>;
+}</code></pre>
+      </div>
+
+      <h4>情境 D：動態組裝 WHERE 條件字串</h4>
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp</span></div>
+        <pre><code><span class="tp">string</span>[] keyFields <span class="op">=</span> <span class="kw">new</span>[] { <span class="str">"FUND_NO"</span>, <span class="str">"YEAR"</span>, <span class="str">"SEQ_NO"</span> };
+
+<span class="tp">string</span> whereClause <span class="op">=</span> <span class="tp">string</span>.<span class="fn">Join</span>(<span class="str">" AND "</span>,
+    keyFields.<span class="fn">Select</span>(k <span class="op">=></span> <span class="str">$"M.<span class="op">{</span>k<span class="op">}</span> = @<span class="op">{</span>k<span class="op">}</span>"</span>));
+<span class="cm">// 結果："M.FUND_NO = @FUND_NO AND M.YEAR = @YEAR AND M.SEQ_NO = @SEQ_NO"</span></code></pre>
+      </div>
+
+      <h3>2.7 常見陷阱</h3>
+      <div class="article-table-wrap">
+        <table class="article-table">
+          <thead>
+            <tr><th>陷阱</th><th>錯誤</th><th>正確</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>多次 enumerate</td><td><code>query.Count(); query.First();</code></td><td>先 <code>.ToList()</code> 再使用</td></tr>
+            <tr><td>DataTable 忘記 AsEnumerable</td><td><code>dt.Where(...)</code></td><td><code>dt.AsEnumerable().Where(...)</code></td></tr>
+            <tr><td>null 欄位沒處理</td><td><code>r.Field&lt;string&gt;("COL")</code> 可能是 null</td><td>搭配 <code>?.ToString()</code> 或 null check</td></tr>
+            <tr><td>GroupBy 後忘記投影</td><td>直接用 <code>g</code>，拿到的是 <code>IGrouping</code></td><td><code>.Select(g =&gt; new { g.Key, ... })</code></td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <!-- ===== 三、整合應用 ===== -->
       <h2>三、整合應用：非同步 + LINQ</h2>
-      <p>概念整合和 IFA 未來升級方向。</p>
+
+      <h3>3.1 概念整合</h3>
+      <p>在 IFA 後端，非同步負責「不阻塞執行緒」，LINQ 負責「資料後處理」，兩者分工清晰：</p>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp — 非同步取得資料 + LINQ 後處理</span></div>
+        <pre><code><span class="kw">public async</span> <span class="tp">Task</span>&lt;<span class="tp">IActionResult</span>&gt; <span class="fn">Search</span>([<span class="tp">FromBody</span>] <span class="tp">SearchClass</span> searchData)
+{
+    <span class="cm">// 非同步查詢 → 不阻塞執行緒</span>
+    <span class="kw">var</span> result <span class="op">=</span> <span class="kw">await</span> <span class="fn">doSearchResultAsync</span>(searchData);
+
+    <span class="cm">// LINQ 後處理 → 記憶體內篩選與轉換</span>
+    <span class="kw">var</span> processed <span class="op">=</span> result.<span class="fn">AsEnumerable</span>()
+        .<span class="fn">Where</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"STATUS"</span>) <span class="op">!=</span> <span class="str">"D"</span>)
+        .<span class="fn">Select</span>(r <span class="op">=></span> <span class="kw">new</span> {
+            FundNo <span class="op">=</span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"FUND_NO"</span>),
+            Year <span class="op">=</span> <span class="tp">ShareModel</span>.<span class="fn">dispYear</span>(r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"YEAR"</span>))
+        })
+        .<span class="fn">ToList</span>();
+
+    <span class="kw">return</span> <span class="fn">Ok</span>(processed);
+}</code></pre>
+      </div>
+
+      <h3>3.2 IFA 未來升級方向</h3>
+      <p>KSI Kernel 目前使用同步模式。當框架升級支援非同步 API 時，Init Action 將可同時發出多個下拉查詢：</p>
+
+      <div class="code-block">
+        <div class="code-block-header"><span>csharp — Task.WhenAll 並行下拉查詢</span></div>
+        <pre><code><span class="kw">public async</span> <span class="tp">Task</span>&lt;<span class="tp">IActionResult</span>&gt; <span class="fn">Init</span>()
+{
+    <span class="cm">// 同時發出三個查詢，不依序等待</span>
+    <span class="kw">var</span> t1 <span class="op">=</span> <span class="fn">GetDropdownAsync</span>(<span class="str">"QL_YEAR"</span>);
+    <span class="kw">var</span> t2 <span class="op">=</span> <span class="fn">GetDropdownAsync</span>(<span class="str">"QL_FUND"</span>);
+    <span class="kw">var</span> t3 <span class="op">=</span> <span class="fn">GetMasterDataAsync</span>();
+    <span class="kw">await</span> <span class="tp">Task</span>.<span class="fn">WhenAll</span>(t1, t2, t3);
+
+    <span class="cm">// LINQ 整理下拉清單</span>
+    <span class="kw">var</span> years <span class="op">=</span> t1.Result.<span class="fn">AsEnumerable</span>()
+        .<span class="fn">Where</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"STATUS"</span>) <span class="op">==</span> <span class="str">"A"</span>)
+        .<span class="fn">Select</span>(r <span class="op">=></span> r.<span class="fn">Field</span>&lt;<span class="tp">string</span>&gt;(<span class="str">"YEAR"</span>))
+        .<span class="fn">Distinct</span>()
+        .<span class="fn">ToList</span>();
+
+    <span class="kw">return</span> <span class="fn">Ok</span>(<span class="kw">new</span> { years, funds <span class="op">=</span> t2.Result, master <span class="op">=</span> t3.Result });
+}</code></pre>
+      </div>
 
       <!-- ===== 四、學習心得總結 ===== -->
       <h2>四、學習心得總結</h2>
